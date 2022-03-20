@@ -1,0 +1,12 @@
+﻿  Scene1.cpp
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(39,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(42,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(42,74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(49,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(57,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(60,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(60,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(67,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(155,20): warning C4018: '<=': signed/unsigned mismatch
+D:\Visual Studio\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(160,20): warning C4018: '<=': signed/unsigned mismatch
+  ComponentFramework.vcxproj -> D:\Visual Studio\ComponentFramework22.4.0\Debug\ComponentFramework.exe
