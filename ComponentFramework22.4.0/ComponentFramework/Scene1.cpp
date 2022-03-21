@@ -11,7 +11,7 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
-Scene1::Scene1(): camera(nullptr), checkerBoard(nullptr), light(nullptr) {
+Scene1::Scene1(): Actor(nullptr), camera(nullptr), checkerBoard(nullptr), light(nullptr), RowX(0), RowY(0), nextRow(0) {
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 }
 
@@ -22,13 +22,12 @@ Scene1::~Scene1() {
 
 bool Scene1::OnCreate() {
 	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
-	camera = new CameraActor(nullptr);
+	AddComponent<CameraActor>(camera = new CameraActor(nullptr));
 	camera->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.0f,-12.0f), Quaternion());
 	camera->OnCreate();
-
-	light = new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f,10.0f,0.0f), Vec4(0.8f,0.8f,0.8f,0.0f));
+	AddComponent<Actor>(light = new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f,10.0f,0.0f), Vec4(0.8f,0.8f,0.8f,0.0f)));
 	light->OnCreate();
-	checkerBoard = new Actor(nullptr); //0.87f, -0.5f, 0.0f, 0.0f
+	AddComponent<Actor>(checkerBoard = new Actor(nullptr)); //0.87f, -0.5f, 0.0f, 0.0f
 	checkerBoard->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
 	checkerBoard->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
 	checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
@@ -37,12 +36,14 @@ bool Scene1::OnCreate() {
 
 	//Red Checker creation loop
 	RowX = RowY = nextRow = 0;
+
 	for (int x = 0; x <= 11; x++) {
 		checkerRedList.push_back(new Actor(checkerBoard));
 		checkerRedList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		checkerRedList[x]->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		checkerRedList[x]->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
 		checkerRedList[x]->OnCreate();
+		//AddComponent<Actor>(checkerRedList[x]);
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -71,13 +72,6 @@ bool Scene1::OnCreate() {
 			}
 		}
 	}
-
-	checkerBlack = new Actor(checkerBoard);
-	checkerBlack->AddComponent<TransformComponent>(nullptr, Vec3(0.63f, 0.63f, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
-	checkerBlack->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
-	checkerBlack->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png");
-	checkerBlack->OnCreate();
-
 	return true;
 }
 
@@ -147,8 +141,8 @@ void Scene1::Render() const {
 	}
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerBoard->GetModelMatrix());
-	glBindBuffer(GL_UNIFORM_BUFFER, camera->GetMatriciesID());
-	glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID());
+	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
+	glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID());//GetComponent<LightActor>()->GetLightID());
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 	mesh->Render(GL_TRIANGLES);
 
@@ -162,11 +156,6 @@ void Scene1::Render() const {
 		glBindTexture(GL_TEXTURE_2D, checkerBlackList[x]->GetComponent<MaterialComponent>()->getTextureID());
 		checkerBlackList[x]->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 	}
-
-	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerBlack->GetModelMatrix());
-	glBindTexture(GL_TEXTURE_2D, checkerBlack->GetComponent<MaterialComponent>()->getTextureID());
-	//checkerBlack->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
 }

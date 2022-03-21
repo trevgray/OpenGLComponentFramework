@@ -48,6 +48,7 @@ public:
 		/// This part is tricky, 
 		/// before you add the component ask if you have the component in the list already,
 		/// if so - don't add a second one. 
+
 		if (GetComponent<ComponentTemplate>()) {
 			///Trying to add a component type that is already added
 #ifdef _DEBUG
@@ -57,6 +58,7 @@ public:
 			componentObject = nullptr;
 			return;
 		}
+
 		/// If nothing else is messed up, finish building the component and
 		/// add the component to the list
 		components.push_back(componentObject);

@@ -2,7 +2,6 @@
 #include "Actor.h"
 #include "Matrix.h"
 using namespace MATH;
-//#include "TransformComponent.h"
 class CameraActor : public Actor {
 private:
 	Matrix4 projectionMatrix;

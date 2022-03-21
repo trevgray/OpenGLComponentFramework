@@ -11,11 +11,11 @@ using namespace MATH;
 /// Forward declarations 
 union SDL_Event;
 
-class Scene1 : public Scene {
+class Scene1 : public Scene, public Actor {
 private:
 	CameraActor* camera;
 	LightActor* light;
-	Actor* checkerBoard, *checkerBlack;
+	Actor* checkerBoard;
 	std::vector<Actor*> checkerRedList, checkerBlackList;
 	int nextRow;
 	float RowX, RowY;
