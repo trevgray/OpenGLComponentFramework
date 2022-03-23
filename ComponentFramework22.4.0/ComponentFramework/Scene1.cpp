@@ -9,6 +9,7 @@
 #include "MeshComponent.h"
 #include "ShaderComponent.h"
 #include "MaterialComponent.h"
+#include "MouseMoveableComponent.h"
 #include "QMath.h"
 
 Scene1::Scene1(): Actor(nullptr), camera(nullptr), checkerBoard(nullptr), light(nullptr), RowX(0), RowY(0), nextRow(0) {
@@ -25,9 +26,11 @@ bool Scene1::OnCreate() {
 	AddComponent<CameraActor>(camera = new CameraActor(nullptr));
 	camera->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.0f,-12.0f), Quaternion());
 	camera->OnCreate();
-	AddComponent<Actor>(light = new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f,10.0f,0.0f), Vec4(0.8f,0.8f,0.8f,0.0f)));
+	//AddComponent<Actor>(light = new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f,10.0f,0.0f), Vec4(0.8f,0.8f,0.8f,0.0f)));
+	light = new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f, 10.0f, 0.0f), Vec4(0.8f, 0.8f, 0.8f, 0.0f));
 	light->OnCreate();
-	AddComponent<Actor>(checkerBoard = new Actor(nullptr)); //0.87f, -0.5f, 0.0f, 0.0f
+	//AddComponent<Actor>(checkerBoard = new Actor(nullptr)); //0.87f, -0.5f, 0.0f, 0.0f
+	checkerBoard = new Actor(nullptr);
 	checkerBoard->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
 	checkerBoard->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
 	checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
@@ -42,8 +45,8 @@ bool Scene1::OnCreate() {
 		checkerRedList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		checkerRedList[x]->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		checkerRedList[x]->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
+		checkerRedList[x]->AddComponent<MouseMoveableComponent>(nullptr);
 		checkerRedList[x]->OnCreate();
-		//AddComponent<Actor>(checkerRedList[x]);
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -109,7 +112,9 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		}
 		break;
 
-	case SDL_MOUSEMOTION:          
+	case SDL_MOUSEMOTION:
+		checkerRedList[0]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, camera->GetProjectionMatrix(), camera->GetViewMatrix()));
+		//std::cout << sdlEvent.motion.x << " " << sdlEvent.motion.y << std::endl;
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:              

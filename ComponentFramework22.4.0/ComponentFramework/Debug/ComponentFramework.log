@@ -1,7 +1,2 @@
-﻿  Scene1v2.cpp
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(38,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(49,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(57,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(67,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(39,9): warning C4101: 'checker': unreferenced local variable
+﻿  MouseMoveableComponent.cpp
   ComponentFramework.vcxproj -> D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\Debug\ComponentFramework.exe
