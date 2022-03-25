@@ -1,2 +1,12 @@
-﻿  MouseMoveableComponent.cpp
+﻿  Scene1.cpp
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(41,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(45,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(45,74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(53,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(61,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(64,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(64,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(71,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(156,20): warning C4018: '<=': signed/unsigned mismatch
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(161,20): warning C4018: '<=': signed/unsigned mismatch
   ComponentFramework.vcxproj -> D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\Debug\ComponentFramework.exe

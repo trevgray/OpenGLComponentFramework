@@ -113,11 +113,13 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		break;
 
 	case SDL_MOUSEMOTION:
-		checkerRedList[0]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, camera->GetProjectionMatrix(), camera->GetViewMatrix()));
+		checkerRedList[0]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, checkerRedList[0], camera->GetProjectionMatrix()));
+		//checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, checkerRedList[0]);
 		//std::cout << sdlEvent.motion.x << " " << sdlEvent.motion.y << std::endl;
 		break;
 
-	case SDL_MOUSEBUTTONDOWN:              
+	case SDL_MOUSEBUTTONDOWN:    
+		//checkerRedList[0]->GetComponent<MouseMoveableComponent>()->SetMousePos2(sdlEvent.button.x, sdlEvent.button.y);
 		break; 
 
 	case SDL_MOUSEBUTTONUP:            
@@ -149,7 +151,7 @@ void Scene1::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID());//GetComponent<LightActor>()->GetLightID());
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
-	mesh->Render(GL_TRIANGLES);
+	//mesh->Render(GL_TRIANGLES);
 
 	for (int x = 0; x <= checkerRedList.size() - 1; x++) {
 		glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerRedList[x]->GetModelMatrix());

@@ -27,18 +27,37 @@ void MouseMoveableComponent::setWindowDimensions() {
 	invNDC = MMath::inverse(MMath::viewportNDC(viewport[2], viewport[3]));
 }
 
-Vec3 MouseMoveableComponent::getMouseVector(int x, int y, Matrix4 projectionMatrix, Matrix4 viewMatrix) {
+Vec3 MouseMoveableComponent::getMouseVector(int x, int y, Actor* actor, Matrix4 projectionMatrix) {
 	int viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
-	float x2 = (2.0f * x) / viewport[2] - 1.0f; //750 width
-	float y2 = 1.0f - (2.0f * y) / viewport[3]; //1250 height
-	float z2 = 1.0f;
-	Vec3 ray_nds = Vec3(x2, y2, z2);
-	Vec4 ray_clip = Vec4(ray_nds.x, ray_nds.y, -1.0, 1.0);
-	Vec4 ray_eye = MMath::inverse(projectionMatrix) * ray_clip;
-	ray_eye = Vec4(ray_eye.x, ray_eye.y, -1.0, 0.0);
-	Vec3 ray_wor = (MMath::inverse(viewMatrix) * ray_eye);
-	// don't forget to normalise the vector at some point
-	ray_wor = VMath::normalize(ray_wor);
-	return ray_nds;
+	Vec3 mousePosition(static_cast<float>(x), static_cast<float>(y), 0.0f);
+	Vec3 v = invNDC * mousePosition; //i've converted to NDC coords, i need to convert out
+
+	Vec4 projPos = MMath::inverse(projectionMatrix) * Vec4(v, 1.0);
+	projPos = projPos / projPos.w;
+	std::cout << projPos.x << " " << projPos.y << " " << projPos.z << std::endl;
+	return projPos;
+	//v.x = viewport[2] * (v.x + 1) / 2;
+
+	//Vec3 objectPos = actor->GetComponent<TransformComponent>()->GetPosition();
+//Matrix4 invProjectionMatrix = MMath::inverse(projectionMatrix);
+//objectPos = invNDC * objectPos;
+//std::cout << objectPos.x << " " << objectPos.y << " " << objectPos.z << std::endl;
+
+	/*Vec3 objectPos = actor->GetComponent<TransformComponent>()->GetPosition();
+Matrix4 modelMatrix = actor->GetModelMatrix();
+double modelview[16];
+glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+double projectionMatrix[16];
+glGetDoublev(GL_PROJECTION_MATRIX, projectionMatrix);
+int viewport[4];
+glGetIntegerv(GL_VIEWPORT, viewport);
+double* winX = 0;
+double* winY = 0;
+double* winZ = 0;
+gluProject(objectPos.x, objectPos.y, objectPos.z, modelview, projectionMatrix, viewport, winX, winY, winZ);*/
+}
+
+void MouseMoveableComponent::SetMousePos2(int x, int y) {
+	//lastMousePos = getMouseVector(x, y);
 }

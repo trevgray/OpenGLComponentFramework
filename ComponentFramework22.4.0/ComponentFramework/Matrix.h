@@ -27,7 +27,7 @@ namespace  MATH {
 		///	2  6  10 14        [0][2]  [1][2]  [2][2]  [3][2]
 		///	3  7  11 15        [0][3]  [1][3]  [2][3]  [3][3]
 	private:
-		float  m[16];
+		float m[16];
 	public:
 
 		inline Matrix4& operator = (const Matrix4& m_) {

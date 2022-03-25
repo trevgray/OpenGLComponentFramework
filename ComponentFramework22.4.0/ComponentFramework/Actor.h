@@ -91,5 +91,6 @@ public:
 	void RemoveAllComponents();
 	void ListComponents() const;
 	Matrix4 GetModelMatrix();
+	void setModelMatrix(Matrix4 modelMatrix_) { modelMatrix = modelMatrix_; }
 };
 
