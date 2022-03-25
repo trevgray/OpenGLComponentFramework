@@ -11,10 +11,11 @@ CameraActor::CameraActor(Component* parent_):Actor(parent_) {
 }
 
 CameraActor::~CameraActor() {
-
+	OnDestroy();
 }
 
 bool CameraActor::OnCreate() {
+	if (isCreated) return isCreated; //return true
 	Debug::Info("Creating values for CameraActor: ", __FILE__, __LINE__);
 	//buffer
 	size_t bufferSize = 2 * UBO_PADDING::MAT4; //*2 because we want both projectionMatrix & viewMatrix
@@ -27,7 +28,8 @@ bool CameraActor::OnCreate() {
 
 	UpdateProjectionMatrix(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	UpdateViewMatrix();
-	return true;
+	isCreated = true;
+	return isCreated;
 }
 
 void CameraActor::UpdateProjectionMatrix(const float fovy, const float aspectRatio, const float near, const float far) {
@@ -56,4 +58,5 @@ void CameraActor::UpdateViewMatrix() {
 
 void CameraActor::OnDestroy() {
 	glDeleteBuffers(1, &uboMatricesID); //protect the memory and delete the buffer
+	isCreated = false;
 }

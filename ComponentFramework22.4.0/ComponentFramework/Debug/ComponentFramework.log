@@ -1,4 +1,12 @@
-﻿  Scene1.cpp
+﻿  Actor.cpp
+  CameraActor.cpp
+  LightActor.cpp
+  MaterialComponent.cpp
+  MeshComponent.cpp
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\tiny_obj_loader.h(1665,27): warning C4018: '<': signed/unsigned mismatch
+  MouseMoveableComponent.cpp
+  Scene0.cpp
+  Scene1.cpp
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(41,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(45,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(45,74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
@@ -9,4 +17,14 @@ D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\S
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(71,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(156,20): warning C4018: '<=': signed/unsigned mismatch
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(161,20): warning C4018: '<=': signed/unsigned mismatch
+  Scene1v2.cpp
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(38,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(49,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(57,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(67,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(39,9): warning C4101: 'checker': unreferenced local variable
+  SceneManager.cpp
+  ShaderComponent.cpp
+  TransformComponent.cpp
+  Generating Code...
   ComponentFramework.vcxproj -> D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\Debug\ComponentFramework.exe

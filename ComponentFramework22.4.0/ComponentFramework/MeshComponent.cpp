@@ -8,12 +8,16 @@ using namespace MATH;
 MeshComponent::MeshComponent(Component* parent_, const char* filename_) : Component(parent_) {
     filename = filename_;
 }
-MeshComponent::~MeshComponent() {}
+MeshComponent::~MeshComponent() {
+    OnDestroy();
+}
 
 bool MeshComponent::OnCreate() {
+    if (isCreated) return isCreated;
     LoadModel(filename);
     StoreMeshData(GL_TRIANGLES);
-    return true;
+    isCreated = true;
+    return isCreated;
 }
 
 
@@ -117,6 +121,7 @@ void MeshComponent::Render(GLenum drawmode_) const {
 void MeshComponent::OnDestroy() {
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
+    isCreated = false;
 }
 
 /// Currently unused.

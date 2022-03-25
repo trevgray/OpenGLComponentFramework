@@ -10,18 +10,21 @@ ShaderComponent::ShaderComponent(Component* parent_, const char* vsFilename_, co
 	fsFilename = fsFilename_; //frag shader
 }
 
-ShaderComponent::~ShaderComponent() {}
+ShaderComponent::~ShaderComponent() {
+
+}
 
 
 bool ShaderComponent::OnCreate() {
-	bool status;
-	status = CompileAttach();
-	if (status == false) return false;
-	status = Link();
-	if (status == false) return false;
+	if (isCreated) return isCreated;
+	isCreated = CompileAttach();
+	if (isCreated == false) return isCreated;
+	isCreated = Link();
+	if (isCreated == false) return isCreated;
 
 	SetUniformLocations();
-	return true;
+	isCreated = true;
+	return isCreated;
 }
 
 void ShaderComponent::OnDestroy() {

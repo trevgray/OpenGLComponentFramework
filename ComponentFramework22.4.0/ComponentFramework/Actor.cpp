@@ -7,15 +7,20 @@ Actor::~Actor() {
 
 void Actor::OnDestroy() {
 	RemoveAllComponents();
+	isCreated = false;
 }
 
 bool Actor::OnCreate() {
+	if (isCreated) return isCreated;
 	for (auto component : components) {
 		if (component->OnCreate() == false) {
 			/*** Error detection needed ***/
+			isCreated = false;
+			return isCreated;
 		}
 	}
-	return true;
+	isCreated = true;
+	return isCreated;
 }
 
 void Actor::Update(const float deltaTime) {

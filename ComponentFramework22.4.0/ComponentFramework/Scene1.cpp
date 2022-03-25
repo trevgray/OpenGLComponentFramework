@@ -151,7 +151,7 @@ void Scene1::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID());//GetComponent<LightActor>()->GetLightID());
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
-	//mesh->Render(GL_TRIANGLES);
+	mesh->Render(GL_TRIANGLES);
 
 	for (int x = 0; x <= checkerRedList.size() - 1; x++) {
 		glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerRedList[x]->GetModelMatrix());

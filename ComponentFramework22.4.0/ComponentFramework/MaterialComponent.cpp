@@ -4,15 +4,18 @@
 MaterialComponent::MaterialComponent(Component* parent_, const char* filename_):Component(parent_), filename(filename_), textureID(0) {}
 
 MaterialComponent::~MaterialComponent() {
-	glDeleteTextures(1, &textureID); //delete the texture
+	OnDestroy();
 }
 
 bool MaterialComponent::OnCreate() {
-	return LoadImage(filename);
+	if (isCreated) return isCreated;
+	isCreated = LoadImage(filename);
+	return isCreated;
 }
 
 void MaterialComponent::OnDestroy() {
-	this->~MaterialComponent();
+	glDeleteTextures(1, &textureID); //delete the texture
+	isCreated = false;
 }
 
 void MaterialComponent::Update(const float deltaTime) {}

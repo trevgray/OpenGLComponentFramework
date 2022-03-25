@@ -1,7 +1,7 @@
 #pragma once
 class Component {
 	public:
-		Component(Component* parent_):parent(parent_)  {}
+		Component(Component* parent_):parent(parent_), isCreated(false)  {}
 		virtual ~Component() = default; //legit just {}
 		virtual bool OnCreate() = 0;
 		virtual void OnDestroy() = 0;
@@ -9,5 +9,5 @@ class Component {
 		virtual void Render()const = 0;
 	protected:
 		Component* parent;
-
+		bool isCreated;
 };
