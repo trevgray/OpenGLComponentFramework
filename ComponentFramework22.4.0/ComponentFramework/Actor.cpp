@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "Debug.h"
 Actor::Actor(Component* parent_):Component(parent_) {}
 
 Actor::~Actor() {
@@ -7,6 +8,7 @@ Actor::~Actor() {
 
 void Actor::OnDestroy() {
 	RemoveAllComponents();
+	Debug::Info("Deleting assets for Actor: ", __FILE__, __LINE__);
 	isCreated = false;
 }
 
@@ -14,7 +16,7 @@ bool Actor::OnCreate() {
 	if (isCreated) return isCreated;
 	for (auto component : components) {
 		if (component->OnCreate() == false) {
-			/*** Error detection needed ***/
+			Debug::Error("Loading assets for Actor/Components: ", __FILE__, __LINE__);
 			isCreated = false;
 			return isCreated;
 		}

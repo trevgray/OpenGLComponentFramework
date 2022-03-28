@@ -213,5 +213,11 @@
     <None Include="shaders\textureVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\colourPickerFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\colourPickerVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

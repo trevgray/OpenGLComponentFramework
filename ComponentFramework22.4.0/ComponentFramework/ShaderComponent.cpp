@@ -11,7 +11,7 @@ ShaderComponent::ShaderComponent(Component* parent_, const char* vsFilename_, co
 }
 
 ShaderComponent::~ShaderComponent() {
-
+	OnDestroy();
 }
 
 
@@ -33,6 +33,7 @@ void ShaderComponent::OnDestroy() {
 	glDeleteShader(fragShaderID);
 	glDeleteShader(vertShaderID);
 	glDeleteProgram(shaderID);
+	isCreated = false;
 }
 
 

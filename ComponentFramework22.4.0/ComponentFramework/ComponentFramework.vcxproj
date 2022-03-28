@@ -203,6 +203,8 @@
     <Text Include="GameEngineLog.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\colourPickerFrag.glsl" />
+    <None Include="shaders\colourPickerVert.glsl" />
     <None Include="shaders\defaultFrag.glsl" />
     <None Include="shaders\defaultVert.glsl" />
     <None Include="shaders\textureFrag.glsl" />

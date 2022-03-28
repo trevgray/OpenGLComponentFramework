@@ -9,12 +9,18 @@ MouseMoveableComponent::MouseMoveableComponent(Component* parent_):Component(par
 }
 
 
-MouseMoveableComponent::~MouseMoveableComponent() {}
+MouseMoveableComponent::~MouseMoveableComponent() {
+	OnDestroy();
+}
 
 bool MouseMoveableComponent::OnCreate() {
-	return true;
+	if (isCreated) return isCreated;
+	isCreated = true;
+	return isCreated;
 }
-void MouseMoveableComponent::OnDestroy() {}
+void MouseMoveableComponent::OnDestroy() {
+	isCreated = false;
+}
 
 void MouseMoveableComponent::Update(const float deltaTime) {
 

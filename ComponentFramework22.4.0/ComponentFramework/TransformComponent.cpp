@@ -11,11 +11,17 @@ pos(pos_), orientation(Quaternion(orientation_)) {
 	//Component*(parent) = parent_; just seeing how to initialize Component in the {}
 }
 
-TransformComponent::~TransformComponent() {}
-bool TransformComponent::OnCreate() {
-	return true;
+TransformComponent::~TransformComponent() {
+	OnDestroy();
 }
-void TransformComponent::OnDestroy() {}
+bool TransformComponent::OnCreate() {
+	if (isCreated) return isCreated;
+	isCreated = true;
+	return isCreated;
+}
+void TransformComponent::OnDestroy() {
+	isCreated = false;
+}
 
 void TransformComponent::Update(const float deltaTime) {
 
