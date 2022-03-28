@@ -6,6 +6,13 @@ LightActor::LightActor(Component* parent_, LightStyle lightStyle_, Vec3 location
 lightStyle(lightStyle_), pos(location_), intensity(intensity_), colour(colour_), uboLightDataID(NULL) {
 }
 
+LightActor::LightActor(Component* parent_) : Actor(parent_) {
+	pos = Vec3(0.0f, 10.0f, 0.0f);
+	colour = Vec4(0.8f, 0.8f, 0.8f, 0.0f);
+	intensity = 1.0f;
+	fallOff = Vec3(0.0f, 0.0f, 0.0f);
+}
+
 LightActor::~LightActor() {
 	OnDestroy();
 }

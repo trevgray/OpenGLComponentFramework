@@ -24,6 +24,7 @@ private:
 	GLuint bindpoint = 1;
 public:
 	LightActor(Component* parent_, LightStyle lightStyle_, Vec3 location_, Vec4 colour_, float intensity_ = 1.0f, Vec3 fallOff_ = Vec3(0.0f,0.0f,0.0f));
+	LightActor(Component* parent_);
 	~LightActor();
 	Vec3 getPosition() const { return pos; }
 	bool OnCreate() override;

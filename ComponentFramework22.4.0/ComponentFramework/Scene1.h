@@ -17,7 +17,8 @@ private:
 	LightActor* light;
 	Actor* checkerBoard;
 	std::vector<Actor*> checkerRedList, checkerBlackList;
-	std::vector<int> objectIDs;
+	unsigned char data[4];
+	int pickedID;
 	int nextRow;
 	float RowX, RowY;
 public:
