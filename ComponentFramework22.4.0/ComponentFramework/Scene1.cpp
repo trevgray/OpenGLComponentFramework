@@ -111,40 +111,40 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerRedList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
 				}
 				else {
-					checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerRedList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
 				}
 				else {
-					checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerRedList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
 				}
 				else {
-					checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerRedList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
 				}
 				else {
-					checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
 				}
 			}
 		}
@@ -153,14 +153,6 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 	case SDL_MOUSEMOTION:
 		//checkerRedList[0]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, checkerRedList[0], camera->GetProjectionMatrix()));
 		//checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, checkerRedList[0]);
-		//std::cout << sdlEvent.motion.x << " " << sdlEvent.motion.y << std::endl;
-		glFlush();
-		glFinish();
-
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glReadPixels(1280 - sdlEvent.button.x, sdlEvent.button.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, data); //man this was hard to figure out
-		//https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadPixels.xhtml
-		//the origin of SDL is bottom right, but for glReadPixels it's bottom left
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:    
@@ -169,8 +161,13 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		//glFinish();
 
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		int viewport[4];
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		glReadPixels(sdlEvent.button.x, viewport[3] - sdlEvent.button.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, data); //man this was hard to figure out
 		pickedID = data[0] + data[1] * 256 + data[2] * 256 * 256; //set the id for the checkers
 		std::cout << pickedID << std::endl;
+		//https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadPixels.xhtml
+		//the origin of SDL is bottom right, but for glReadPixels it's bottom left;
 		break; 
 
 	case SDL_MOUSEBUTTONUP:            

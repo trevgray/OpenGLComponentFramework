@@ -1,4 +1,4 @@
-Mon Mar 28 03:23:37 2022
+Mon Mar 28 23:57:57 2022
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 NVIDIA 472.12
 [INFO]: Graphics card vendor NVIDIA Corporation
@@ -8,10 +8,8 @@ Mon Mar 28 03:23:37 2022
 [INFO]: Loading assets Scene0: 
 [INFO]: Creating values for CameraActor: 
 [INFO]: Uniforms:
-"colour" loc:-1
+"PickingColor" loc:0
 "modelMatrix" loc:2
-"myTexture" loc:0
-"pos" loc:-1
 "projection" loc:-1
 "view" loc:-1
 
