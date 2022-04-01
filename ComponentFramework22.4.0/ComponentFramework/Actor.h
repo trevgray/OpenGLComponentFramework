@@ -12,7 +12,7 @@ class Actor: public Component {
 	Actor& operator=(Actor&&) = delete;
 
 private:
-	std::vector<Component*> components;
+	std::vector<std::shared_ptr<Component>> components;
 	Matrix4 modelMatrix;
 public:
 	Actor(Component* parent_);
@@ -22,54 +22,46 @@ public:
 	void Update(const float deltaTime_);
 	void Render() const;
 
-	
-	/// Footnote to those who think you can't write code in the header file - this is true
-	/// with a few exceptions. (1) You can't inline code (implicitly or not) unless it is in 
-	/// the header file and (2) templates must be in the header file
 	template<typename ComponentTemplate, typename ... Args>
 	void AddComponent(Args&& ... args_) {
-		/// Create the new object based on the template type and the argument list
-		ComponentTemplate* componentObject = new ComponentTemplate(std::forward<Args>(args_)...);
-		
-		/// Just so you follow me...
-		/// If a dynamic_cast succeeds, it returns a pointer of the new type,
-		/// if it fails, it returns a nullptr. Meaning it wasn't inherited from Component
-		if (dynamic_cast<Component*>(componentObject) == nullptr) {
-			///Trying to add a component that is not a base class of Component class
-			/// I don't think the compiler will let this happen anyway
-#ifdef _DEBUG
-			std::cerr << "WARNING:Trying to add a component that is not a base class of Component class - ignored\n";
-#endif
-			delete componentObject;
-			componentObject = nullptr;
-			return;
-		}
-
-		/// This part is tricky, 
-		/// before you add the component ask if you have the component in the list already,
+		/// before you add the component, ask if you have the component in the list already,
 		/// if so - don't add a second one. 
-
-		if (GetComponent<ComponentTemplate>()) {
-			///Trying to add a component type that is already added
+		if (GetComponent<ComponentTemplate>().get() != nullptr) {
 #ifdef _DEBUG
 			std::cerr << "WARNING: Trying to add a component type that is already added - ignored\n";
 #endif
-			delete componentObject;
-			componentObject = nullptr;
 			return;
 		}
-
-		/// If nothing else is messed up, finish building the component and
-		/// add the component to the list
-		components.push_back(componentObject);
-		//componentObject
+		/// Using std::make_shared to do the work. This is the new idea!,
+		components.push_back(std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...));
 	}
 
 	template<typename ComponentTemplate>
-	ComponentTemplate* GetComponent() const {
-		for (auto component : components) {
-			if (dynamic_cast<ComponentTemplate*>(component)) {
-				return dynamic_cast<ComponentTemplate*>(component);
+	void AddComponent(Ref<ComponentTemplate> component_) {
+		if (GetComponent<ComponentTemplate>().get() != nullptr) {
+#ifdef _DEBUG
+			std::cerr << "WARNING: Trying to add a component type that is already added - ignored\n";
+#endif
+			return;
+		}
+		components.push_back(component_);
+	}
+
+	template<typename ComponentTemplate> std::shared_ptr<Component> GetComponent() {
+		for (std::shared_ptr<Component> c : components) {
+			Component* componentPtr = c.get(); 
+			if (dynamic_cast<ComponentTemplate*>(componentPtr)) { //or just do c, but i want to read this in the future
+				return c;
+			}
+		}
+		return std::shared_ptr<Component>(nullptr);
+	}
+
+	template<typename ComponentTemplate> ComponentTemplate* GetComponentRawPointer() { //just for compatibility with the old code - not recommended to use
+		for (std::shared_ptr<Component> c : components) {
+			Component* componentPtr = c.get();
+			if (dynamic_cast<ComponentTemplate*>(componentPtr)) { //or just do c, but i want to read this in the future
+				return dynamic_cast<ComponentTemplate*>(componentPtr);
 			}
 		}
 		return nullptr;
@@ -88,6 +80,7 @@ public:
 			}
 		}
 	}
+
 	void RemoveAllComponents();
 	void ListComponents() const;
 	Matrix4 GetModelMatrix();

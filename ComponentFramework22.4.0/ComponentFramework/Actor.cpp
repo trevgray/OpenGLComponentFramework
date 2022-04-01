@@ -31,7 +31,7 @@ void Actor::Update(const float deltaTime) {
 void Actor::Render()const {}
 
 Matrix4 Actor::GetModelMatrix() {
-	TransformComponent* transform = GetComponent<TransformComponent>();
+	TransformComponent* transform = GetComponentRawPointer<TransformComponent>();
 	if (transform) {
 		modelMatrix = transform->GetTransformMatrix();
 	}
@@ -47,7 +47,8 @@ Matrix4 Actor::GetModelMatrix() {
 void Actor::RemoveAllComponents() {
 	for (auto currentComponent : components) {
 		currentComponent->OnDestroy();
-		delete currentComponent;
+		currentComponent.reset();
+		//delete currentComponent;
 	}
 	components.clear(); //clear the vector
 }

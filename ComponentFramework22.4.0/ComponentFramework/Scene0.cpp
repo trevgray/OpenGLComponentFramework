@@ -56,28 +56,28 @@ void Scene0::OnDestroy() {
 void Scene0::HandleEvents(const SDL_Event &sdlEvent) {
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
-		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-			camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
-			camera->UpdateViewMatrix();
-		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-			camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
-			camera->UpdateViewMatrix();
-		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
-			camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
-			camera->UpdateViewMatrix();
-		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-			camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
-			camera->UpdateViewMatrix();
-		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {
-			dryBowser->GetComponent<TransformComponent>()->SetTransform(dryBowser->GetComponent<TransformComponent>()->GetPosition(), dryBowser->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)), Vec3(0.1f, 0.1f, 0.1f));
-		}
-		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
-			dryBowser->GetComponent<TransformComponent>()->SetTransform(dryBowser->GetComponent<TransformComponent>()->GetPosition(), dryBowser->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)), Vec3(0.1f, 0.1f, 0.1f));
-		}
+		//if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+		//	camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
+		//	camera->UpdateViewMatrix();
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+		//	camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
+		//	camera->UpdateViewMatrix();
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
+		//	camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
+		//	camera->UpdateViewMatrix();
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+		//	camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
+		//	camera->UpdateViewMatrix();
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {
+		//	dryBowser->GetComponent<TransformComponent>()->SetTransform(dryBowser->GetComponent<TransformComponent>()->GetPosition(), dryBowser->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)), Vec3(0.1f, 0.1f, 0.1f));
+		//}
+		//else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
+		//	dryBowser->GetComponent<TransformComponent>()->SetTransform(dryBowser->GetComponent<TransformComponent>()->GetPosition(), dryBowser->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)), Vec3(0.1f, 0.1f, 0.1f));
+		//}
 		break;
 
 	case SDL_MOUSEMOTION:          
@@ -105,9 +105,9 @@ void Scene0::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	ShaderComponent* shader = dryBowser->GetComponent<ShaderComponent>();
-	MeshComponent* mesh = dryBowser->GetComponent<MeshComponent>();
-	MaterialComponent* texture = dryBowser->GetComponent<MaterialComponent>();
+	ShaderComponent* shader = dryBowser->GetComponentRawPointer<ShaderComponent>();
+	MeshComponent* mesh = dryBowser->GetComponentRawPointer<MeshComponent>();
+	MaterialComponent* texture = dryBowser->GetComponentRawPointer<MaterialComponent>();
 	if (shader == nullptr || mesh == nullptr) {
 		return;
 	}
@@ -118,8 +118,8 @@ void Scene0::Render() const {
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 	mesh->Render(GL_TRIANGLES);
 
-	mesh = hammer->GetComponent<MeshComponent>();
-	texture = hammer->GetComponent<MaterialComponent>();
+	mesh = hammer->GetComponentRawPointer<MeshComponent>();
+	texture = hammer->GetComponentRawPointer<MaterialComponent>();
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, hammer->GetModelMatrix());
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 	mesh->Render(GL_TRIANGLES);

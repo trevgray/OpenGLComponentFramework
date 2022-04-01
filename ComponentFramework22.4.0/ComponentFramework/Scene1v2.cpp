@@ -83,7 +83,7 @@ void Scene1v2::OnDestroy() {
 void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
-		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+		/*if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
 			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
@@ -104,7 +104,7 @@ void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
 			GetComponent<Actor>(2)->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
-		}
+		}*/
 		break;
 
 	case SDL_MOUSEMOTION:          
@@ -131,14 +131,14 @@ void Scene1v2::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetProgram());
+	glUseProgram(GetComponent<Actor>(2)->GetComponentRawPointer<ShaderComponent>()->GetProgram());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
 	for (int x = 2; x <= components.size() - 2; x++) { //-2 because the first 2 components are the camera and lighr actor - a smarter system is probably better like checking if the component is an actor
-		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
-		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID());
-		GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
+		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponentRawPointer<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
+		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponentRawPointer<MaterialComponent>()->getTextureID());
+		GetComponent<Actor>(x)->GetComponentRawPointer<MeshComponent>()->Render(GL_TRIANGLES);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
