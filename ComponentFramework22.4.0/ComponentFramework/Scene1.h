@@ -13,10 +13,10 @@ union SDL_Event;
 
 class Scene1 : public Scene, public Actor {
 private:
-	CameraActor* camera;
-	LightActor* light;
-	Actor* checkerBoard;
-	std::vector<Actor*> checkerRedList, checkerBlackList;
+	Ref<CameraActor> camera;
+	Ref<LightActor> light;
+	Ref<Actor> checkerBoard;
+	std::vector<std::shared_ptr<Actor>> checkerRedList, checkerBlackList;
 	int pickedID;
 	int nextRow;
 	float RowX, RowY;

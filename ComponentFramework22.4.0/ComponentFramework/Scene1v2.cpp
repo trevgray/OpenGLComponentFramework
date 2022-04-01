@@ -38,7 +38,7 @@ bool Scene1v2::OnCreate() {
 	GetComponent<Actor>(2)->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
 
 	//Red Checker creation loop
-	RowX = RowY = nextRow = 0;
+	RowX = RowY = nextRow = 0.0f;
 	for (int x = 3; x <= 14; x++) {
 		AddComponent<Actor>(new Actor(GetComponent<Actor>(2)));
 		GetComponent<Actor>(x)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
@@ -48,7 +48,7 @@ bool Scene1v2::OnCreate() {
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
-			RowX = nextRow = 0;
+			RowX = nextRow = 0.0f;
 			RowY += 1.26f;
 			if (RowY == 1.26f) {
 				RowX = 1.27f;
@@ -56,7 +56,7 @@ bool Scene1v2::OnCreate() {
 		}
 	}
 	//Black Checker creation loop
-	RowX = RowY = nextRow = 0;
+	RowX = RowY = nextRow = 0.0f;
 	for (int x = 15; x <= 27; x++) {
 		AddComponent<Actor>(new Actor(GetComponent<Actor>(2)));
 		GetComponent<Actor>(x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
@@ -66,7 +66,7 @@ bool Scene1v2::OnCreate() {
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
-			RowX = nextRow = 0;
+			RowX = nextRow = 0.0f;
 			RowY -= 1.26f;
 			if (RowY == -1.26f) {
 				RowX = -1.27f;
@@ -131,14 +131,14 @@ void Scene1v2::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(GetComponent<Actor>(2)->GetComponentRawPointer<ShaderComponent>()->GetProgram());
+	glUseProgram(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetProgram());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
-	for (int x = 2; x <= components.size() - 2; x++) { //-2 because the first 2 components are the camera and lighr actor - a smarter system is probably better like checking if the component is an actor
-		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponentRawPointer<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
-		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponentRawPointer<MaterialComponent>()->getTextureID());
-		GetComponent<Actor>(x)->GetComponentRawPointer<MeshComponent>()->Render(GL_TRIANGLES);
+	for (int x = 2; x <= components.size() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
+		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
+		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID());
+		GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);

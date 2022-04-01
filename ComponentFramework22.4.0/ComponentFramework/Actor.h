@@ -36,8 +36,7 @@ public:
 		components.push_back(std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...));
 	}
 
-	template<typename ComponentTemplate>
-	void AddComponent(Ref<ComponentTemplate> component_) {
+	template<typename ComponentTemplate> void AddComponent(Ref<ComponentTemplate> component_) {
 		if (GetComponent<ComponentTemplate>().get() != nullptr) {
 #ifdef _DEBUG
 			std::cerr << "WARNING: Trying to add a component type that is already added - ignored\n";
@@ -47,21 +46,20 @@ public:
 		components.push_back(component_);
 	}
 
-	template<typename ComponentTemplate> std::shared_ptr<Component> GetComponent() {
-		for (std::shared_ptr<Component> c : components) {
-			Component* componentPtr = c.get(); 
-			if (dynamic_cast<ComponentTemplate*>(componentPtr)) { //or just do c, but i want to read this in the future
-				return c;
+	template<typename ComponentTemplate> Ref<ComponentTemplate> GetComponent() const {
+		for (auto c : components) {
+			if (dynamic_cast<ComponentTemplate*>(c.get())) {
+				//https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast dynamic cast designed for shared_ptr's
+				return std::dynamic_pointer_cast<ComponentTemplate>(c);
 			}
 		}
-		return std::shared_ptr<Component>(nullptr);
+		return Ref<ComponentTemplate>(nullptr);
 	}
 
-	template<typename ComponentTemplate> ComponentTemplate* GetComponentRawPointer() { //just for compatibility with the old code - not recommended to use
+	template<typename ComponentTemplate> ComponentTemplate* GetComponentRawPointer() const { //just for compatibility with the old code - not recommended to use
 		for (std::shared_ptr<Component> c : components) {
-			Component* componentPtr = c.get();
-			if (dynamic_cast<ComponentTemplate*>(componentPtr)) { //or just do c, but i want to read this in the future
-				return dynamic_cast<ComponentTemplate*>(componentPtr);
+			if (dynamic_cast<ComponentTemplate*>(c.get())) {
+				return dynamic_cast<ComponentTemplate*>(c.get());
 			}
 		}
 		return nullptr;
@@ -70,11 +68,11 @@ public:
 	template<typename ComponentTemplate>
 	void RemoveComponent() {
 		for (unsigned int i = 0; i < components.size(); i++) {
-			if (dynamic_cast<ComponentTemplate*>(components[i]) != nullptr) {
-				components[i]->OnDestroy();
+			if (dynamic_cast<ComponentTemplate*>(components[i].get()) != nullptr) {
+				/*components[i]->OnDestroy(); //not need for smart pointers
 				delete components[i];
 				components[i] = nullptr;
-				///This removes the component from the vector list
+				//This removes the component from the vector list*/
 				components.erase(components.begin() + i);
 				break;
 			}
@@ -86,4 +84,3 @@ public:
 	Matrix4 GetModelMatrix();
 	void setModelMatrix(Matrix4 modelMatrix_) { modelMatrix = modelMatrix_; }
 };
-

@@ -102,6 +102,9 @@
     <ClCompile Include="EMath.cpp">
       <Filter>Header Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="MouseMoveableComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
