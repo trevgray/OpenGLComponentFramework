@@ -35,7 +35,7 @@ bool Scene1v2::OnCreate() {
 	GetComponent<Actor>(2)->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
 	GetComponent<Actor>(2)->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
 	GetComponent<Actor>(2)->AddComponent<MaterialComponent>(nullptr, "textures/8x8_checkered_board.png");
-	GetComponent<Actor>(2)->OnCreate();
+	GetComponent<Actor>(2)->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
 
 	//Red Checker creation loop
 	RowX = RowY = nextRow = 0;
@@ -84,26 +84,26 @@ void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-			//camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
-			//camera->UpdateViewMatrix();
+			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
+			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-			//camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
-			//camera->UpdateViewMatrix();
+			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
+			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
-			//camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
-			//camera->UpdateViewMatrix();
+			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
+			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-			//camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
-			//camera->UpdateViewMatrix();
+			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
+			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {
-			//checkerBoard->GetComponent<TransformComponent>()->SetTransform(checkerBoard->GetComponent<TransformComponent>()->GetPosition(), checkerBoard->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)));
+			GetComponent<Actor>(2)->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
-			//checkerBoard->GetComponent<TransformComponent>()->SetTransform(checkerBoard->GetComponent<TransformComponent>()->GetPosition(), checkerBoard->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
+			GetComponent<Actor>(2)->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 		break;
 
@@ -133,9 +133,9 @@ void Scene1v2::Render() const {
 
 	glUseProgram(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetProgram());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
-	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());//GetComponent<LightActor>()->GetLightID());
+	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
-	for (int x = 2; x <= components.size() - 2; x++) {
+	for (int x = 2; x <= components.size() - 2; x++) { //-2 because the first 2 components are the camera and lighr actor - a smarter system is probably better like checking if the component is an actor
 		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
 		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID());
 		GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);

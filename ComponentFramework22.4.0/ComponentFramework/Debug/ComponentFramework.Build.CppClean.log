@@ -9,8 +9,10 @@ d:\github\openglcomponentframework\componentframework22.4.0\componentframework\d
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\mmath.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\main.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scenemanager.obj
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene1v2.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene1.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\qmath.obj
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\mousemoveablecomponent.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\meshcomponent.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\materialcomponent.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\lightactor.obj
@@ -18,8 +20,6 @@ d:\github\openglcomponentframework\componentframework22.4.0\componentframework\d
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\debug.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\cameraactor.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\actor.obj
-d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene1v2.obj
-d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\mousemoveablecomponent.obj
 d:\github\openglcomponentframework\componentframework22.4.0\debug\componentframework.exe
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\componentframework.ilk
 d:\github\openglcomponentframework\componentframework22.4.0\debug\componentframework.pdb

@@ -46,7 +46,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	BuildNewScene(SCENE_NUMBER::SCENE1);
+	BuildNewScene(SCENE_NUMBER::SCENE1V2); //Set Scene to SCENE1 or SCENE1V2
 	
 	return true;
 }

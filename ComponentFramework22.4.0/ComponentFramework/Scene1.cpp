@@ -11,13 +11,12 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
-Scene1::Scene1(): Actor(nullptr), camera(nullptr), checkerBoard(nullptr), light(nullptr), RowX(0), RowY(0), nextRow(0) {
+Scene1::Scene1(): Actor(nullptr), camera(nullptr), checkerBoard(nullptr), light(nullptr), RowX(0), RowY(0), nextRow(0), pickedID(0) {
 	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
 }
 
 Scene1::~Scene1() {
 	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
-	
 }
 
 bool Scene1::OnCreate() {
@@ -30,8 +29,8 @@ bool Scene1::OnCreate() {
 	checkerBoard = new Actor(nullptr);
 	checkerBoard->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
 	checkerBoard->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
-	//checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-	checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/colourPickerVert.glsl", "shaders/colourPickerFrag.glsl");
+	//checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl"); //for the texture shader
+	checkerBoard->AddComponent<ShaderComponent>(nullptr, "shaders/colourPickerVert.glsl", "shaders/colourPickerFrag.glsl"); //using the colour picker shader
 	checkerBoard->AddComponent<MaterialComponent>(nullptr, "textures/8x8_checkered_board.png");
 	checkerBoard->OnCreate();
 
@@ -40,10 +39,9 @@ bool Scene1::OnCreate() {
 
 	for (int x = 0; x <= 11; x++) {
 		checkerRedList.push_back(new Actor(checkerBoard));
-		checkerRedList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		checkerRedList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-4.5f + RowX, -4.3f + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		checkerRedList[x]->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		checkerRedList[x]->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
-		//checkerRedList[x]->AddComponent<MouseMoveableComponent>(nullptr);
 		checkerRedList[x]->OnCreate();
 		RowX += 2.55f;
 		nextRow++;
@@ -59,7 +57,7 @@ bool Scene1::OnCreate() {
 	RowX = RowY = nextRow = 0;
 	for (int x = 0; x <= 11; x++) {
 		checkerBlackList.push_back(new Actor(checkerBoard));
-		checkerBlackList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		checkerBlackList[x]->AddComponent<TransformComponent>(nullptr, Vec3(-3.225f + RowX, 4.4f + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		checkerBlackList[x]->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		checkerBlackList[x]->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png"); //think about removing these
 		checkerBlackList[x]->OnCreate();
@@ -81,11 +79,14 @@ void Scene1::OnDestroy() {
 	if (camera) delete camera;
 	if (checkerBoard) delete checkerBoard;
 	if (light) delete light;
+	checkerRedList.clear();
+	checkerBlackList.clear();
 }
 
 void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
-	switch( sdlEvent.type ) {
-    case SDL_KEYDOWN:
+	ShaderComponent* shader = checkerRedList[0]->GetComponent<ShaderComponent>();
+	switch (sdlEvent.type) {
+	case SDL_KEYDOWN:
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 			camera->GetComponent<TransformComponent>()->SetPosition(camera->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
 			camera->UpdateViewMatrix();
@@ -108,43 +109,44 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
 			checkerBoard->GetComponent<TransformComponent>()->SetTransform(checkerBoard->GetComponent<TransformComponent>()->GetPosition(), checkerBoard->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
 		}
+		//The checker can be moved with WASD
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_W) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1.26, 0));
 				}
 				else {
-					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, 1.26, 0)); //has the -11 because both lists have the length of 12 and picked id goes to 23
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_S) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1.26, 0));
 				}
 				else {
-					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(0, -1.26, 0));
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_D) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.26, 0, 0));
 				}
 				else {
-					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.26, 0, 0));
 				}
 			}
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_A) {
 			if (pickedID < 24) {
 				if (pickedID < 12) {
-					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1, 0, 0));
+					checkerBlackList[pickedID]->GetComponent<TransformComponent>()->SetPosition(checkerBlackList[pickedID]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.26, 0, 0));
 				}
 				else {
-					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(1, 0, 0));
+					checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->SetPosition(checkerRedList[pickedID - 11]->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.26, 0, 0));
 				}
 			}
 		}
@@ -155,17 +157,13 @@ void Scene1::HandleEvents(const SDL_Event &sdlEvent) {
 		//checkerRedList[0]->GetComponent<MouseMoveableComponent>()->getMouseVector(sdlEvent.button.x, sdlEvent.button.y, checkerRedList[0]);
 		break;
 
-	case SDL_MOUSEBUTTONDOWN:    
-		//checkerRedList[0]->GetComponent<MouseMoveableComponent>()->SetMousePos2(sdlEvent.button.x, sdlEvent.button.y);
-		//glFlush();
-		//glFinish();
-
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	case SDL_MOUSEBUTTONDOWN:
 		int viewport[4];
-		glGetIntegerv(GL_VIEWPORT, viewport);
+		unsigned char data[4];
+		glGetIntegerv(GL_VIEWPORT, viewport); //getting the viewport
 		glReadPixels(sdlEvent.button.x, viewport[3] - sdlEvent.button.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, data); //man this was hard to figure out
 		pickedID = data[0] + data[1] * 256 + data[2] * 256 * 256; //set the id for the checkers
-		std::cout << pickedID << std::endl;
+		std::cout << pickedID << std::endl; //printing the ID
 		//https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadPixels.xhtml
 		//the origin of SDL is bottom right, but for glReadPixels it's bottom left;
 		break; 
@@ -184,7 +182,6 @@ void Scene1::Update(const float deltaTime) {
 
 void Scene1::Render() const {
 	glEnable(GL_DEPTH_TEST);
-	/// Clear the screen
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -196,32 +193,32 @@ void Scene1::Render() const {
 	}
 	glUseProgram(shader->GetProgram());
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerBoard->GetModelMatrix());
-	glUniform4f(shader->GetUniformID("PickingColor"), 24 / 255.0f, 24 / 255.0f, 24 / 255.0f, 1.0f);
+	glUniform4f(shader->GetUniformID("PickingColor"), 24 / 255.0f, 24 / 255.0f, 24 / 255.0f, 1.0f); //setting the color of the board to white
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
-	glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID());//GetComponent<LightActor>()->GetLightID());
-	//glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
+	//glBindBuffer(GL_UNIFORM_BUFFER, light->GetLightID()); //for the texture shader
+	//glBindTexture(GL_TEXTURE_2D, texture->getTextureID()); //for the texture shader
 	mesh->Render(GL_TRIANGLES);
 
 	for (int x = 0; x <= checkerRedList.size() - 1; x++) {
-		int r = (x + 11 & 0x000000FF) >> 0;
-		int g = (x + 11 & 0x0000FF00) >> 8;
+		int r = (x + 11 & 0x000000FF) >> 0; //using the red channel for each checker
+		int g = (x + 11 & 0x0000FF00) >> 8; //every checker has a unique colour
 		int b = (x + 11 & 0x00FF0000) >> 16;
 		// OpenGL expects colors to be in [0,1], so divide by 255.
-		glUniform4f(shader->GetUniformID("PickingColor"), r / 255.0f, g / 255.0f, b / 255.0f, 1.0f);
+		glUniform4f(shader->GetUniformID("PickingColor"), r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); //setting the color of the checker in the shader
 		glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerRedList[x]->GetModelMatrix());
-		//glBindTexture(GL_TEXTURE_2D, checkerRedList[x]->GetComponent<MaterialComponent>()->getTextureID());
+		//glBindTexture(GL_TEXTURE_2D, checkerRedList[x]->GetComponent<MaterialComponent>()->getTextureID()); //for the texture shader
 		checkerRedList[x]->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 	}
 	for (int x = 0; x <= checkerBlackList.size() - 1; x++) {
-		int r = (x & 0x000000FF) >> 0;
-		int g = (x & 0x0000FF00) >> 8;
+		int r = (x & 0x000000FF) >> 0; //using the red channel for each checker
+		int g = (x & 0x0000FF00) >> 8; //every checker has a unique colour
 		int b = (x & 0x00FF0000) >> 16;
 		// OpenGL expects colors to be in [0,1], so divide by 255.
-		glUniform4f(shader->GetUniformID("PickingColor"), r / 255.0f, g / 255.0f, b / 255.0f, 1.0f);
+		glUniform4f(shader->GetUniformID("PickingColor"), r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); //setting the color of the checker in the shader
 		glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, checkerBlackList[x]->GetModelMatrix());
-		//glBindTexture(GL_TEXTURE_2D, checkerBlackList[x]->GetComponent<MaterialComponent>()->getTextureID());
+		//glBindTexture(GL_TEXTURE_2D, checkerBlackList[x]->GetComponent<MaterialComponent>()->getTextureID()); //for the texture shader
 		checkerBlackList[x]->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 	}
-	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0); //for the texture shader
 	glUseProgram(0);
 }
