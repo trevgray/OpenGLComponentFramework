@@ -1,24 +1,4 @@
-﻿  Actor.cpp
-  CameraActor.cpp
-  LightActor.cpp
-  MouseMoveableComponent.cpp
-  Scene0.cpp
-  Scene1.cpp
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(38,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(49,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(57,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(67,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(113,178): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(116,184): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(123,179): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(126,185): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(133,178): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(136,184): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(143,179): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(146,185): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(199,20): warning C4018: '<=': signed/unsigned mismatch
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1.cpp(209,20): warning C4018: '<=': signed/unsigned mismatch
-  Scene1v2.cpp
+﻿  Scene1v2.cpp
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(41,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(41,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(44,92): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
@@ -32,6 +12,4 @@ D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\S
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(69,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(69,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene1v2.cpp(138,20): warning C4018: '<=': signed/unsigned mismatch
-  SceneManager.cpp
-  Generating Code...
   ComponentFramework.vcxproj -> D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\Debug\ComponentFramework.exe

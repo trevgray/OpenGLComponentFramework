@@ -15,7 +15,7 @@ class Scene1v2 : public Scene, public Actor { //inherited from actor, but i'm no
 private:
 	int nextRow;
 	float RowX, RowY;
-	std::vector<Component*> components;
+	std::vector<std::shared_ptr<Component>> components;
 public:
 	explicit Scene1v2();
 	virtual ~Scene1v2();
@@ -26,36 +26,31 @@ public:
 	virtual void Render() const;
 	virtual void HandleEvents(const SDL_Event &sdlEvent);
 
+	//I would put these functions into the Scene.h, but we are going to use the Asset Manager soon, so I don't really see the reason to go back and remove the code in all the Scenes instead of just one
+
 	//Overwriting the AddComponent and GetComponent functions in Actor so more than 1 type of Actor can be added to the Scene
 
-	template<typename ComponentTemplate, typename ... Args>
-	void AddComponent(Args&& ... args_) {
-		ComponentTemplate* componentObject = new ComponentTemplate(std::forward<Args>(args_)...);
-		if (dynamic_cast<Component*>(componentObject) == nullptr) {
-#ifdef _DEBUG
-			std::cerr << "WARNING:Trying to add a component that is not a base class of Component class - ignored\n";
-#endif
-			delete componentObject;
-			componentObject = nullptr;
-			return;
-		}
-		components.push_back(componentObject);
+	template<typename ComponentTemplate, typename ... Args> void AddComponent(Args&& ... args_) {
+		components.push_back(std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...));
 	}
 
-	template<typename ComponentTemplate>
-	ComponentTemplate* GetComponent() const  {
-		for (auto component : components) {
-			if (dynamic_cast<ComponentTemplate*>(component)) {
-				return dynamic_cast<ComponentTemplate*>(component);
+	template<typename ComponentTemplate> void AddComponent(Ref<ComponentTemplate> component_) {
+		components.push_back(component_);
+	}
+
+	template<typename ComponentTemplate> Ref<ComponentTemplate> GetComponent() const {
+		for (auto c : components) {
+			if (dynamic_cast<ComponentTemplate*>(c.get())) {
+				//https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast dynamic cast designed for shared_ptr's
+				return std::dynamic_pointer_cast<ComponentTemplate>(c);
 			}
 		}
-		return nullptr;
+		return Ref<ComponentTemplate>(nullptr);
 	}
 
-	template<typename ComponentTemplate>
-	ComponentTemplate* GetComponent(int objectNum) const {
-		if (dynamic_cast<ComponentTemplate*>(components[objectNum])) { //check if it is the type we want
-				return dynamic_cast<ComponentTemplate*>(components[objectNum]);
+	template<typename ComponentTemplate> Ref<ComponentTemplate> GetComponent(int objectNum) const {
+		if (dynamic_cast<ComponentTemplate*>(components[objectNum].get())) { //check if it is the type we want
+			return std::dynamic_pointer_cast<ComponentTemplate>(components[objectNum]);
 		}
 		return nullptr;
 	}

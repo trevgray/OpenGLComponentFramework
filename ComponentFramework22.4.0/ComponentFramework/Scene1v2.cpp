@@ -40,7 +40,7 @@ bool Scene1v2::OnCreate() {
 	//Red Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 3; x <= 14; x++) {
-		AddComponent<Actor>(new Actor(GetComponent<Actor>(2)));
+		AddComponent<Actor>(new Actor(GetComponent<Actor>(2).get()));
 		GetComponent<Actor>(x)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		GetComponent<Actor>(x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		GetComponent<Actor>(x)->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
@@ -58,7 +58,7 @@ bool Scene1v2::OnCreate() {
 	//Black Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 15; x <= 27; x++) {
-		AddComponent<Actor>(new Actor(GetComponent<Actor>(2)));
+		AddComponent<Actor>(new Actor(GetComponent<Actor>(2).get()));
 		GetComponent<Actor>(x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		GetComponent<Actor>(x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
 		GetComponent<Actor>(x)->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png"); //think about removing these
@@ -83,7 +83,7 @@ void Scene1v2::OnDestroy() {
 void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
-		/*if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
 			GetComponent<CameraActor>()->UpdateViewMatrix();
 		}
@@ -104,7 +104,7 @@ void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
 			GetComponent<Actor>(2)->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>(2)->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
-		}*/
+		}
 		break;
 
 	case SDL_MOUSEMOTION:          
