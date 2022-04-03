@@ -11,7 +11,7 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
-Scene2::Scene2(): RowX(0), RowY(0), nextRow(0) {
+Scene2::Scene2(): RowX(0), RowY(0), nextRow(0), assetManager(nullptr) {
 	Debug::Info("Created Scene2: ", __FILE__, __LINE__);
 }
 
@@ -24,7 +24,7 @@ bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 	//assetManager
 	assetManager = new AssetManager();
-	assetManager->AddComponent<ShaderComponent>("TextureShader", nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
+	assetManager->AddComponent<ShaderComponent>("TextureShader", nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl"); //im not sure this is how you are suppose to use the assetManager, but it works at not creating 32 checker meshes in memory
 	assetManager->AddComponent<MeshComponent>("PlaneMesh", nullptr, "meshes/Plane.obj");
 	assetManager->AddComponent<MeshComponent>("CheckerPieceMesh", nullptr, "meshes/CheckerPiece.obj");
 	assetManager->AddComponent<MaterialComponent>("RedCheckerTexture", nullptr, "textures/redCheckerPiece.png");
@@ -65,7 +65,7 @@ bool Scene2::OnCreate() {
 	}
 	//Black Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
-	for (int x = 15; x <= 27; x++) {
+	for (int x = 15; x <= 26; x++) {
 		AddComponent<Actor>(new Actor(GetComponent<Actor>(2).get()));
 		GetComponent<Actor>(x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		GetComponent<Actor>(x)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("CheckerPieceMesh"));
@@ -145,10 +145,13 @@ void Scene2::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
-	for (int x = 2; x <= GetComponentVectorSize() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
+	//for (int x = 2; x <= GetComponentVectorSize() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
+	for (int x = 0; x <= GetComponentVectorSize() - 1; x++) {
 		glUniformMatrix4fv(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
-		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID());
-		GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
+		if (GetComponent<Actor>(x)->GetComponent<MaterialComponent>() != nullptr) { //everything is an actor, so i just check if it has a texture
+			glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID()); //this is also amazing because we can add as many actors as we want, and the render does not need to change
+			GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
+		}
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);

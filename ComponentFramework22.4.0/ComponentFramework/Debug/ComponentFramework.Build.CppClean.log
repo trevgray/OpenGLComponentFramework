@@ -1,7 +1,5 @@
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\vc142.pdb
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\vc142.idb
-d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\window.obj
-d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\vmath.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\transformcomponent.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\timer.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\shadercomponent.obj
@@ -9,6 +7,7 @@ d:\github\openglcomponentframework\componentframework22.4.0\componentframework\d
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\mmath.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\main.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scenemanager.obj
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene2.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene1v2.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\scene1.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\qmath.obj
@@ -19,9 +18,12 @@ d:\github\openglcomponentframework\componentframework22.4.0\componentframework\d
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\emath.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\debug.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\cameraactor.obj
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\assetmanager.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\actor.obj
-d:\github\openglcomponentframework\componentframework22.4.0\debug\componentframework.exe
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\window.obj
+d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\vmath.obj
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\componentframework.ilk
+d:\github\openglcomponentframework\componentframework22.4.0\debug\componentframework.exe
 d:\github\openglcomponentframework\componentframework22.4.0\debug\componentframework.pdb
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\componen.614c2865.tlog\cl.command.1.tlog
 d:\github\openglcomponentframework\componentframework22.4.0\componentframework\debug\componen.614c2865.tlog\cl.read.1.tlog
