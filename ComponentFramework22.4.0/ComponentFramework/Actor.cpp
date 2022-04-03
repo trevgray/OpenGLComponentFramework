@@ -31,8 +31,8 @@ void Actor::Update(const float deltaTime) {
 void Actor::Render()const {}
 
 Matrix4 Actor::GetModelMatrix() {
-	TransformComponent* transform = GetComponentRawPointer<TransformComponent>();
-	if (transform) {
+	Ref<TransformComponent> transform = GetComponent<TransformComponent>();
+	if (transform.get()) {
 		modelMatrix = transform->GetTransformMatrix();
 	}
 	else {

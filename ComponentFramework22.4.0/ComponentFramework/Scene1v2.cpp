@@ -11,17 +11,17 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
-Scene1v2::Scene1v2(): Actor(nullptr), RowX(0), RowY(0), nextRow(0) {
-	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
+Scene1v2::Scene1v2(): RowX(0), RowY(0), nextRow(0) {
+	Debug::Info("Created Scene1v2: ", __FILE__, __LINE__);
 }
 
 Scene1v2::~Scene1v2() {
-	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Deleted Scene1v2: ", __FILE__, __LINE__);
 	
 }
 
 bool Scene1v2::OnCreate() {
-	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Loading assets Scene1v2: ", __FILE__, __LINE__);
 	//camera
 	AddComponent<CameraActor>(new CameraActor(nullptr));
 	GetComponent<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.0f,-12.0f), Quaternion());
@@ -77,7 +77,7 @@ bool Scene1v2::OnCreate() {
 }
 
 void Scene1v2::OnDestroy() {
-	Debug::Info("Deleting assets Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Deleting assets Scene1v2: ", __FILE__, __LINE__);
 }
 
 void Scene1v2::HandleEvents(const SDL_Event &sdlEvent) {
@@ -135,7 +135,7 @@ void Scene1v2::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
-	for (int x = 2; x <= components.size() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
+	for (int x = 2; x <= GetComponentVectorSize() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
 		glUniformMatrix4fv(GetComponent<Actor>(2)->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
 		glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID());
 		GetComponent<Actor>(x)->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);

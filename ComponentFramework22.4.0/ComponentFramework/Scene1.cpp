@@ -12,15 +12,15 @@
 #include "QMath.h"
 
 Scene1::Scene1(): Actor(nullptr), camera(nullptr), checkerBoard(nullptr), light(nullptr), RowX(0), RowY(0), nextRow(0), pickedID(0) {
-	Debug::Info("Created Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Created Scene1: ", __FILE__, __LINE__);
 }
 
 Scene1::~Scene1() {
-	Debug::Info("Deleted Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Deleted Scene1: ", __FILE__, __LINE__);
 }
 
 bool Scene1::OnCreate() {
-	Debug::Info("Loading assets Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Loading assets Scene1: ", __FILE__, __LINE__);
 	camera = std::make_shared<CameraActor>(nullptr);
 	camera->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.0f,-12.0f), Quaternion());
 	camera->OnCreate();
@@ -75,7 +75,7 @@ bool Scene1::OnCreate() {
 }
 
 void Scene1::OnDestroy() {
-	Debug::Info("Deleting assets Scene0: ", __FILE__, __LINE__);
+	Debug::Info("Deleting assets Scene1: ", __FILE__, __LINE__);
 	checkerRedList.clear();
 	checkerBlackList.clear();
 }

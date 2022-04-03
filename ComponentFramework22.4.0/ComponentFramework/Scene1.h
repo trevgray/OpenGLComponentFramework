@@ -1,5 +1,4 @@
-#ifndef SCENE1_H
-#define SCENE1_H
+#pragma once
 #include "Scene.h"
 #include "Vector.h"
 #include "Matrix.h"
@@ -30,4 +29,3 @@ public:
 	virtual void Render() const;
 	virtual void HandleEvents(const SDL_Event &sdlEvent);
 };
-#endif // SCENE0_H
