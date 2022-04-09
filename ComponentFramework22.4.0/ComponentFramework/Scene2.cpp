@@ -33,14 +33,14 @@ bool Scene2::OnCreate() {
 	assetManager->OnCreate();
 	//camera
 	AddComponent<CameraActor>(new CameraActor(nullptr));
-	GetComponent<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.0f,-12.0f), Quaternion());
+	GetComponent<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
 	GetComponent<CameraActor>()->OnCreate();
 	//light
 	AddComponent<LightActor>(new LightActor(nullptr)); //there might be an error with your code scott, i have to make a constructor with nothing in add it, idk why
 	GetComponent<LightActor>()->OnCreate();
 	//checkerboard
 	AddComponent<Actor>(new Actor(nullptr));
-	GetComponent<Actor>(2)->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
+	GetComponent<Actor>(2)->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(0.95f, -0.31f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
 	GetComponent<Actor>(2)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("PlaneMesh"));
 	GetComponent<Actor>(2)->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("CheckerBoardTexture"));
 	GetComponent<Actor>(2)->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
@@ -141,12 +141,11 @@ void Scene2::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetProgram());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
 	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
 
-	//for (int x = 2; x <= GetComponentVectorSize() - 2; x++) { //-2 because the first 2 components are the camera and light actor - a smarter system is probably better like checking if the component is an actor
-	for (int x = 0; x <= GetComponentVectorSize() - 1; x++) {
+	glUseProgram(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetProgram());
+	for (int x = 0; x <= GetComponentVectorSize() - 1; x++) { //for (auto actor : actorGraph) //for each could also work - but the actorGraph is protected so doing a for loop is better in my opinion
 		glUniformMatrix4fv(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetUniformID("modelMatrix"), 1, GL_FALSE, GetComponent<Actor>(x)->GetModelMatrix());
 		if (GetComponent<Actor>(x)->GetComponent<MaterialComponent>() != nullptr) { //everything is an actor, so i just check if it has a texture
 			glBindTexture(GL_TEXTURE_2D, GetComponent<Actor>(x)->GetComponent<MaterialComponent>()->getTextureID()); //this is also amazing because we can add as many actors as we want, and the render does not need to change

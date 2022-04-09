@@ -41,7 +41,7 @@ void CameraActor::UpdateProjectionMatrix(const float fovy, const float aspectRat
 }
 
 void CameraActor::UpdateViewMatrix() {
-	TransformComponent* transformComponent = GetComponentRawPointer<TransformComponent>();
+	Ref<TransformComponent> transformComponent = GetComponent<TransformComponent>();
 	if (transformComponent == nullptr) {
 		viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 5.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 	}

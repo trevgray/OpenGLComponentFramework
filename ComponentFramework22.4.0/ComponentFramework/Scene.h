@@ -7,7 +7,7 @@ union SDL_Event;
 
 class Scene{
 private:
-	std::vector<std::shared_ptr<Component>> components;
+	std::vector<Ref<Component>> components; //make an unordered map
 public:	
 	virtual ~Scene() = default;
 	virtual bool OnCreate() = 0;
@@ -22,7 +22,7 @@ public:
 		components.push_back(std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...));
 	}
 
-	template<typename ComponentTemplate> void AddComponent(Ref<ComponentTemplate> component_) {
+	template<typename ComponentTemplate> void AddComponent(Ref<ComponentTemplate> component_) { //rename to AddActor - also use actortemplate
 		components.push_back(component_);
 	}
 

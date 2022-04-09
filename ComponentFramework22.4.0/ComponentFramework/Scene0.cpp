@@ -105,9 +105,9 @@ void Scene0::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	ShaderComponent* shader = dryBowser->GetComponentRawPointer<ShaderComponent>();
-	MeshComponent* mesh = dryBowser->GetComponentRawPointer<MeshComponent>();
-	MaterialComponent* texture = dryBowser->GetComponentRawPointer<MaterialComponent>();
+	Ref<ShaderComponent> shader = dryBowser->GetComponent<ShaderComponent>();
+	Ref<MeshComponent> mesh = dryBowser->GetComponent<MeshComponent>();
+	Ref <MaterialComponent> texture = dryBowser->GetComponent<MaterialComponent>();
 	if (shader == nullptr || mesh == nullptr) {
 		return;
 	}
@@ -118,8 +118,8 @@ void Scene0::Render() const {
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 	mesh->Render(GL_TRIANGLES);
 
-	mesh = hammer->GetComponentRawPointer<MeshComponent>();
-	texture = hammer->GetComponentRawPointer<MaterialComponent>();
+	mesh = hammer->GetComponent<MeshComponent>();
+	texture = hammer->GetComponent<MaterialComponent>();
 	glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, hammer->GetModelMatrix());
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 	mesh->Render(GL_TRIANGLES);

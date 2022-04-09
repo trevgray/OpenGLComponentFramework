@@ -12,7 +12,7 @@ class Actor: public Component {
 	Actor& operator=(Actor&&) = delete;
 
 private:
-	std::vector<std::shared_ptr<Component>> components;
+	std::vector<Ref<Component>> components;
 	Matrix4 modelMatrix;
 public:
 	Actor(Component* parent_);
