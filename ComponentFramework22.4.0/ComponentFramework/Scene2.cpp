@@ -32,27 +32,27 @@ bool Scene2::OnCreate() {
 	assetManager->AddComponent<MaterialComponent>("CheckerBoardTexture", nullptr, "textures/8x8_checkered_board.png");
 	assetManager->OnCreate();
 	//camera
-	AddComponent<CameraActor>("camera", new CameraActor(nullptr));
-	GetComponent<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
-	GetComponent<CameraActor>()->OnCreate();
+	AddActor<CameraActor>("camera", new CameraActor(nullptr));
+	GetActor<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
+	GetActor<CameraActor>()->OnCreate();
 	//light
-	AddComponent<LightActor>("light", new LightActor(nullptr)); //there might be an error with your code scott, i have to make a constructor with nothing in add it, idk why
-	GetComponent<LightActor>()->OnCreate();
+	AddActor<LightActor>("light", new LightActor(nullptr)); //there might be an error with your code scott, i have to make a constructor with nothing in add it, idk why
+	GetActor<LightActor>()->OnCreate();
 	//checkerboard
-	AddComponent<Actor>("checkerBoard", new Actor(nullptr));
-	GetComponent<Actor>("checkerBoard")->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(0.95f, -0.31f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
-	GetComponent<Actor>("checkerBoard")->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("PlaneMesh"));
-	GetComponent<Actor>("checkerBoard")->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("CheckerBoardTexture"));
-	GetComponent<Actor>("checkerBoard")->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
+	AddActor<Actor>("checkerBoard", new Actor(nullptr));
+	GetActor<Actor>("checkerBoard")->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(0.95f, -0.31f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
+	GetActor<Actor>("checkerBoard")->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("PlaneMesh"));
+	GetActor<Actor>("checkerBoard")->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("CheckerBoardTexture"));
+	GetActor<Actor>("checkerBoard")->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
 
 	//Red Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 0; x <= 11; x++) {
-		AddComponent<Actor>("Red Checker " + x, new Actor(GetComponent<Actor>("checkerBoard").get()));
-		GetComponent<Actor>("Red Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
-		GetComponent<Actor>("Red Checker " + x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
-		GetComponent<Actor>("Red Checker " + x)->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
-		GetComponent<Actor>("Red Checker " + x)->OnCreate();
+		AddActor<Actor>("Red Checker " + x, new Actor(GetActor<Actor>("checkerBoard").get()));
+		GetActor<Actor>("Red Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		GetActor<Actor>("Red Checker " + x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
+		GetActor<Actor>("Red Checker " + x)->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png"); //think about removing these
+		GetActor<Actor>("Red Checker " + x)->OnCreate();
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -66,11 +66,11 @@ bool Scene2::OnCreate() {
 	//Black Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 0; x <= 11; x++) {
-		AddComponent<Actor>("Black Checker " + x, new Actor(GetComponent<Actor>("checkerBoard").get()));
-		GetComponent<Actor>("Black Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
-		GetComponent<Actor>("Black Checker " + x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
-		GetComponent<Actor>("Black Checker " + x)->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png"); //think about removing these
-		GetComponent<Actor>("Black Checker " + x)->OnCreate();
+		AddActor<Actor>("Black Checker " + x, new Actor(GetActor<Actor>("checkerBoard").get()));
+		GetActor<Actor>("Black Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		GetActor<Actor>("Black Checker " + x)->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj"); //think about removing these
+		GetActor<Actor>("Black Checker " + x)->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png"); //think about removing these
+		GetActor<Actor>("Black Checker " + x)->OnCreate();
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -94,26 +94,26 @@ void Scene2::HandleEvents(const SDL_Event &sdlEvent) {
 	switch( sdlEvent.type ) {
     case SDL_KEYDOWN:
 		if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
-			GetComponent<CameraActor>()->UpdateViewMatrix();
+			GetActor<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetActor<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(1.0, 0.0, 0.0));
+			GetActor<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
-			GetComponent<CameraActor>()->UpdateViewMatrix();
+			GetActor<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetActor<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(-1.0, 0.0, 0.0));
+			GetActor<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
-			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
-			GetComponent<CameraActor>()->UpdateViewMatrix();
+			GetActor<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetActor<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, 1.0));
+			GetActor<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-			GetComponent<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetComponent<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
-			GetComponent<CameraActor>()->UpdateViewMatrix();
+			GetActor<CameraActor>()->GetComponent<TransformComponent>()->SetPosition(GetActor<CameraActor>()->GetComponent<TransformComponent>()->GetPosition() + Vec3(0.0, 0.0, -1.0));
+			GetActor<CameraActor>()->UpdateViewMatrix();
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_E) {
-			GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)));
+			GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->SetTransform(GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetPosition(), GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(-2.0f, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 		else if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q) {
-			GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->SetTransform(GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetPosition(), GetComponent<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
+			GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->SetTransform(GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetPosition(), GetActor<Actor>("checkerBoard")->GetComponent<TransformComponent>()->GetQuaternion() * QMath::angleAxisRotation(2.0f, Vec3(0.0f, 1.0f, 0.0f)));
 		}
 		break;
 
@@ -141,12 +141,12 @@ void Scene2::Render() const {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<CameraActor>()->GetMatriciesID());
-	glBindBuffer(GL_UNIFORM_BUFFER, GetComponent<LightActor>()->GetLightID());
+	glBindBuffer(GL_UNIFORM_BUFFER, GetActor<CameraActor>()->GetMatriciesID());
+	glBindBuffer(GL_UNIFORM_BUFFER, GetActor<LightActor>()->GetLightID());
 
 	glUseProgram(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetProgram());
 	//for (int x = 0; x <= GetComponentVectorSize() - 1; x++) { //for each could also work - but the actorGraph is protected so doing a for loop is better in my opinion
-	for (auto actor : actorGraph) {
+	for (auto actor : GetActorGraph()) {
 		glUniformMatrix4fv(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetUniformID("modelMatrix"), 1, GL_FALSE, actor.second->GetModelMatrix());
 		if (actor.second->GetComponent<MaterialComponent>() != nullptr) { //everything is an actor, so i just check if it has a texture
 			glBindTexture(GL_TEXTURE_2D, actor.second->GetComponent<MaterialComponent>()->getTextureID()); //this is also amazing because we can add as many actors as we want, and the render does not need to change
