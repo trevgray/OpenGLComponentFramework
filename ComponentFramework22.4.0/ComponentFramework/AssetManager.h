@@ -7,14 +7,15 @@
 
 class AssetManager {
 private:
-	std::unordered_map <const char*, Ref<Component>> componentGraph;
+	std::unordered_map <std::string, Ref<Component>> componentGraph;
 public:
 	AssetManager();
 	~AssetManager();
 	bool OnCreate();
 	void RemoveAllComponents();
+	void BuildSceneAssets(const char* XMLFile_, const char* SceneName_);
 
-	template<typename ComponentTemplate, typename ... Args> void AddComponent(const char* name, Args&& ... args_) {
+	template<typename ComponentTemplate, typename ... Args> void AddComponent(std::string name, Args&& ... args_) {
 		Ref<ComponentTemplate> t = std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...);
 		componentGraph[name] = t;
 	}

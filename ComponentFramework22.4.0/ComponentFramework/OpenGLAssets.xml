@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+	
+  <Scene3>
+	  <Component name = "CheckerPieceMesh">
+		  <Type type = "Mesh"/>
+		  <Mesh filename = "meshes/CheckerPiece.obj"/>
+	  </Component>
+
+	  <Component name = "PlaneMesh">
+		  <Type type = "Mesh"/>
+		  <Mesh filename = "meshes/Plane.obj"/>
+	  </Component>
+
+	  <Component name = "RedCheckerTexture">
+		  <Type type = "Material"/>
+		  <Material filename = "textures/redCheckerPiece.png"/>
+	  </Component>
+
+	  <Component name = "BlackCheckerTexture">
+		  <Type type = "Material"/>
+		  <Material filename = "textures/blackCheckerPiece.png"/>
+	  </Component>
+	  
+	  <Component name = "CheckerBoardTexture">
+		  <Type type = "Material"/>
+		  <Material filename = "textures/8x8_checkered_board.png"/>
+	  </Component>
+
+	  <Component name = "TextureShader">
+		  <Type type = "Shader"/>
+		  <Shader vertFileName = "shaders/textureVert.glsl" fragFileName = "shaders/textureFrag.glsl" />
+	  </Component>
+  </Scene3>
+	
+</Root>

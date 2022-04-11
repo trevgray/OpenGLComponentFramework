@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string.h>
 
-ShaderComponent::ShaderComponent(Component* parent_, const char* vsFilename_, const char* fsFilename_):
+ShaderComponent::ShaderComponent(Component* parent_, std::string vsFilename_, std::string fsFilename_):
 	Component(parent_),
 	shaderID(0),vertShaderID(0),fragShaderID(0) {
 	vsFilename = vsFilename_; //vert shader
@@ -40,9 +40,9 @@ void ShaderComponent::OnDestroy() {
 
 bool ShaderComponent::CompileAttach(){
     GLint status;
-	try { 		
-		const char* vsText = ReadTextFile(vsFilename); //reading from a file - vert
-		const char* fsText = ReadTextFile(fsFilename); //reading from a file - frag
+	try {
+		const char* vsText = ReadTextFile(vsFilename.c_str()); //reading from a file - vert
+		const char* fsText = ReadTextFile(fsFilename.c_str()); //reading from a file - frag
 		if (vsText == nullptr || fsText == nullptr) {
 			return false;
 		}

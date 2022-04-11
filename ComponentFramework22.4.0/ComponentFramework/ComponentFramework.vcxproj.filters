@@ -31,14 +31,17 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{44c58818-dd49-4beb-be28-8e053616998a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\MIT Classes">
-      <UniqueIdentifier>{3e3fd3a3-7437-4b68-8b16-7adf4fa17f10}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Actors">
       <UniqueIdentifier>{b380901e-7fc7-47bd-ab1d-2aecca4d4999}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Actors">
       <UniqueIdentifier>{0a7af637-3bce-4c10-8a19-5695d69ecae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TinyLoaders">
+      <UniqueIdentifier>{e5fd8b32-1e77-4bde-b55c-b71e25f06a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TinyLoaders">
+      <UniqueIdentifier>{3e3fd3a3-7437-4b68-8b16-7adf4fa17f10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="EMath.cpp">
       <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Source Files\TinyLoaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +189,7 @@
       <Filter>Header Files\Actors</Filter>
     </ClInclude>
     <ClInclude Include="tiny_obj_loader.h">
-      <Filter>Header Files\MIT Classes</Filter>
+      <Filter>Header Files\TinyLoaders</Filter>
     </ClInclude>
     <ClInclude Include="ShaderComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -205,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="Scene2.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files\TinyLoaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,5 +246,10 @@
     <None Include="shaders\colourPickerVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="OpenGLAssets.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

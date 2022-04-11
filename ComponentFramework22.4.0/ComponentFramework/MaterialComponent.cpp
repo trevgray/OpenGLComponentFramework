@@ -1,7 +1,7 @@
 #include "MaterialComponent.h"
 #include <SDL_image.h>
 
-MaterialComponent::MaterialComponent(Component* parent_, const char* filename_):Component(parent_), filename(filename_), textureID(0) {}
+MaterialComponent::MaterialComponent(Component* parent_, std::string filename_):Component(parent_), filename(filename_), textureID(0) {}
 
 MaterialComponent::~MaterialComponent() {
 	OnDestroy();
@@ -22,10 +22,10 @@ void MaterialComponent::Update(const float deltaTime) {}
 
 void MaterialComponent::Render()const {}
 
-bool MaterialComponent::LoadImage(const char* filename) {
+bool MaterialComponent::LoadImage(std::string filename) {
 	glGenTextures(1, &textureID); //generate name id for each texture
 	glBindTexture(GL_TEXTURE_2D, textureID); //connect textureID to be a GL_TEXTURE_2D
-	SDL_Surface* textureSurface = IMG_Load(filename); //load the texture using SDL
+	SDL_Surface* textureSurface = IMG_Load(filename.c_str()); //load the texture using SDL
 	if (textureSurface == nullptr) {
 		return false;
 	}

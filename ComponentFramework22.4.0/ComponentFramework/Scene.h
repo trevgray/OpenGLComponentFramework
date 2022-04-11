@@ -10,6 +10,7 @@ class Scene{
 private:
 	//std::vector<Ref<Component>> actors; //make an unordered map
 	std::unordered_map <const char*, Ref<Actor>> actorGraph;
+	//AssetManager* assetManager;
 public:	
 	virtual ~Scene() = default;
 	virtual bool OnCreate() = 0;
@@ -17,6 +18,8 @@ public:
 	virtual void Update(const float deltaTime) = 0;
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event &sdlEvent) = 0;
+
+	//AssetManager* GetAssetManager() const { return assetManager; }
 	
 	int GetActorGraphSize() const { return actorGraph.size(); }
 

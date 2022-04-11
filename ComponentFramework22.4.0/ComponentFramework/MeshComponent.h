@@ -12,7 +12,7 @@ class MeshComponent : public Component {
 	MeshComponent& operator = (MeshComponent&&) = delete;
 
 private:
-	const char* filename;
+	std::string filename;
 	std::vector<Vec3> vertices;
 	std::vector<Vec3> normals;
 	std::vector<Vec2> uvCoords;
@@ -25,7 +25,7 @@ private:
 	GLuint vao, vbo;
 public:
 
-	MeshComponent(Component* parent_, const char* filename_);
+	MeshComponent(Component* parent_, std::string filename_);
 	~MeshComponent();
 	bool OnCreate();
 	void OnDestroy();

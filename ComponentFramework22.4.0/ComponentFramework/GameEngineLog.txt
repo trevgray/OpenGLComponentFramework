@@ -1,11 +1,11 @@
-Sat Apr  9 14:39:46 2022
+Mon Apr 11 00:27:32 2022
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 NVIDIA 472.12
 [INFO]: Graphics card vendor NVIDIA Corporation
 [INFO]: Graphics card name NVIDIA GeForce RTX 2070 SUPER/PCIe/SSE2
 [INFO]: GLSL Version 4.60 NVIDIA
-[INFO]: Created Scene2: 
-[INFO]: Loading assets Scene2: 
+[INFO]: Created Scene3: 
+[INFO]: Loading assets Scene3: 
 [INFO]: Uniforms:
 "colour" loc:-1
 "modelMatrix" loc:2
@@ -15,4 +15,34 @@ Sat Apr  9 14:39:46 2022
 "view" loc:-1
 
 [INFO]: Creating values for CameraActor: 
-[ERROR]: Can't find requested component in file: D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene.h on line: 44
+[INFO]: Deleting assets Scene3: 
+[INFO]: Deleted Scene3: 
+[INFO]: Deleting assets Scene3: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting assets for Actor: 
+[INFO]: Deleting the SceneManager

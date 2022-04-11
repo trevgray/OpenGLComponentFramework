@@ -10,8 +10,8 @@ class ShaderComponent: public Component {
 	ShaderComponent& operator = (ShaderComponent&&) = delete;
 
 private:
-	const char* vsFilename;
-	const char* fsFilename;
+	std::string vsFilename;
+	std::string fsFilename;
 	unsigned int shaderID;
 	unsigned int vertShaderID;
 	unsigned int fragShaderID;
@@ -25,7 +25,7 @@ private:
 	
 
 public:
-	ShaderComponent(Component* parent_, const char* vsFilename_, const char* fsFilename_);
+	ShaderComponent(Component* parent_, std::string vsFilename_, std::string fsFilename_);
 	~ShaderComponent();
 	inline GLuint GetProgram() const { return shaderID;}
 	GLuint GetUniformID(std::string name);
