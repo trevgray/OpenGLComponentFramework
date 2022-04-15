@@ -9,7 +9,7 @@ union SDL_Event;
 class Scene{
 private:
 	//std::vector<Ref<Component>> actors; //make an unordered map
-	std::unordered_map <const char*, Ref<Actor>> actorGraph;
+	std::unordered_map <std::string, Ref<Actor>> actorGraph;
 	//AssetManager* assetManager;
 public:	
 	virtual ~Scene() = default;
@@ -23,9 +23,9 @@ public:
 	
 	int GetActorGraphSize() const { return actorGraph.size(); }
 
-	std::unordered_map <const char*, Ref<Actor>> GetActorGraph() const{ return actorGraph; }
+	std::unordered_map <std::string, Ref<Actor>> GetActorGraph() const{ return actorGraph; }
 
-	template<typename ActorTemplate, typename ... Args> void AddActor(const char* name, Args&& ... args_) { //rename to AddActor - also use actortemplate
+	template<typename ActorTemplate, typename ... Args> void AddActor(std::string name, Args&& ... args_) { //rename to AddActor - also use actortemplate
 		Ref<ActorTemplate> t = std::make_shared<ActorTemplate>(std::forward<Args>(args_)...);
 		actorGraph[name] = t;
 	}
@@ -40,7 +40,7 @@ public:
 		return Ref<ActorTemplate>(nullptr);
 	}
 
-	template<typename ActorTemplate> Ref<ActorTemplate> GetActor(const char* name) {
+	template<typename ActorTemplate> Ref<ActorTemplate> GetActor(std::string name) {
 		auto id = actorGraph.find(name);
 #ifdef _DEBUG
 		if (id == actorGraph.end()) {

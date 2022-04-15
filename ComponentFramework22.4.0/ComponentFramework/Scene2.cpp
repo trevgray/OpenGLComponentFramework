@@ -36,7 +36,7 @@ bool Scene2::OnCreate() {
 	GetActor<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
 	GetActor<CameraActor>()->OnCreate();
 	//light
-	AddActor<LightActor>("light", new LightActor(nullptr)); //there might be an error with your code scott, i have to make a constructor with nothing in add it, idk why
+	AddActor<LightActor>("light", new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f, 10.0f, 0.0f), Vec4(0.8f, 0.8f, 0.8f, 0.0f)));
 	GetActor<LightActor>()->OnCreate();
 	//checkerboard
 	AddActor<Actor>("checkerBoard", new Actor(nullptr));

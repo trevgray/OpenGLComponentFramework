@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "Component.h"
+#include "Actor.h"
 #include "Debug.h"
 
 class AssetManager {
@@ -13,7 +14,7 @@ public:
 	~AssetManager();
 	bool OnCreate();
 	void RemoveAllComponents();
-	void BuildSceneAssets(const char* XMLFile_, const char* SceneName_);
+	void BuildSceneAssets(std::string XMLFile_, std::string SceneName_);
 
 	template<typename ComponentTemplate, typename ... Args> void AddComponent(std::string name, Args&& ... args_) {
 		Ref<ComponentTemplate> t = std::make_shared<ComponentTemplate>(std::forward<Args>(args_)...);

@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "Debug.h"
+#include "MeshComponent.h"
 Actor::Actor(Component* parent_):Component(parent_) {}
 
 Actor::~Actor() {
@@ -59,4 +60,10 @@ void Actor::ListComponents() const {
 		std::cout << typeid(*component).name() << std::endl;
 	}
 	std::cout << '\n';
+}
+
+void Actor::InheritActor(Ref<Actor> inheritActor) {
+	for (auto component : inheritActor->GetComponentVector()) {
+		components.push_back(component);
+	}
 }

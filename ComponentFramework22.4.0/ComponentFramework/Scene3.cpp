@@ -11,7 +11,7 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
-Scene3::Scene3(): RowX(0), RowY(0), nextRow(0) {
+Scene3::Scene3(): RowX(0), RowY(0), nextRow(0), assetManager(nullptr) {
 	Debug::Info("Created Scene3: ", __FILE__, __LINE__);
 }
 
@@ -31,7 +31,7 @@ bool Scene3::OnCreate() {
 	GetActor<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
 	GetActor<CameraActor>()->OnCreate();
 	//light
-	AddActor<LightActor>("light", new LightActor(nullptr)); //there might be an error with your code scott, i have to make a constructor with nothing in add it, idk why
+	AddActor<LightActor>("light", new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f, 10.0f, 0.0f), Vec4(0.8f, 0.8f, 0.8f, 0.0f)));
 	GetActor<LightActor>()->OnCreate();
 	//checkerboard
 	AddActor<Actor>("checkerBoard", new Actor(nullptr));
@@ -42,12 +42,14 @@ bool Scene3::OnCreate() {
 
 	//Red Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
+	std::string checkerName;
 	for (int x = 0; x <= 11; x++) {
-		AddActor<Actor>("Red Checker " + x, new Actor(GetActor<Actor>("checkerBoard").get()));
-		GetActor<Actor>("Red Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
-		GetActor<Actor>("Red Checker " + x)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("CheckerPieceMesh")); //think about removing these
-		GetActor<Actor>("Red Checker " + x)->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("RedCheckerTexture")); //think about removing these
-		GetActor<Actor>("Red Checker " + x)->OnCreate();
+		checkerName = "Red Checker " + std::to_string(x);
+		AddActor<Actor>(checkerName, new Actor(GetActor<Actor>("checkerBoard").get()));
+		GetActor<Actor>(checkerName)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		GetActor<Actor>(checkerName)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("CheckerPieceMesh"));
+		GetActor<Actor>(checkerName)->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("RedCheckerTexture"));
+		GetActor<Actor>(checkerName)->OnCreate();
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -61,11 +63,12 @@ bool Scene3::OnCreate() {
 	//Black Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 0; x <= 11; x++) {
-		AddActor<Actor>("Black Checker " + x, new Actor(GetActor<Actor>("checkerBoard").get()));
-		GetActor<Actor>("Black Checker " + x)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
-		GetActor<Actor>("Black Checker " + x)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("CheckerPieceMesh")); //think about removing these
-		GetActor<Actor>("Black Checker " + x)->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("BlackCheckerTexture")); //think about removing these
-		GetActor<Actor>("Black Checker " + x)->OnCreate();
+		checkerName = "Black Checker " + std::to_string(x);
+		AddActor<Actor>(checkerName, new Actor(GetActor<Actor>("checkerBoard").get()));
+		GetActor<Actor>(checkerName)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
+		GetActor<Actor>(checkerName)->AddComponent<MeshComponent>(assetManager->GetComponent<MeshComponent>("CheckerPieceMesh"));
+		GetActor<Actor>(checkerName)->AddComponent<MaterialComponent>(assetManager->GetComponent<MaterialComponent>("BlackCheckerTexture"));
+		GetActor<Actor>(checkerName)->OnCreate();
 		RowX += 2.55f;
 		nextRow++;
 		if (nextRow == 4) {
@@ -140,7 +143,7 @@ void Scene3::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetActor<LightActor>()->GetLightID());
 
 	glUseProgram(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetProgram());
-	//for (int x = 0; x <= GetComponentVectorSize() - 1; x++) { //for each could also work - but the actorGraph is protected so doing a for loop is better in my opinion
+	//for (int x = 0; x <= GetComponentVectorSize() - 1; x++) { //for each could also work
 	for (auto actor : GetActorGraph()) {
 		glUniformMatrix4fv(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetUniformID("modelMatrix"), 1, GL_FALSE, actor.second->GetModelMatrix());
 		if (actor.second->GetComponent<MaterialComponent>() != nullptr) { //everything is an actor, so i just check if it has a texture

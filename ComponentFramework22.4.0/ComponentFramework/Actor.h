@@ -16,6 +16,7 @@ private:
 	Matrix4 modelMatrix;
 public:
 	Actor(Component* parent_);
+	Actor(Component* parent_, Ref<Actor> inheritActor);
 	~Actor();
 	bool OnCreate();
 	void OnDestroy();
@@ -78,8 +79,11 @@ public:
 		}
 	}
 
+	std::vector<Ref<Component>> GetComponentVector() { return components; }
+
 	void RemoveAllComponents();
 	void ListComponents() const;
+	void InheritActor(Ref<Actor> inheritActor);
 	Matrix4 GetModelMatrix();
 	void setModelMatrix(Matrix4 modelMatrix_) { modelMatrix = modelMatrix_; }
 };
