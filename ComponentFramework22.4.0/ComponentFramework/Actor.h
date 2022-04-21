@@ -16,7 +16,6 @@ private:
 	Matrix4 modelMatrix;
 public:
 	Actor(Component* parent_);
-	Actor(Component* parent_, Ref<Actor> inheritActor);
 	~Actor();
 	bool OnCreate();
 	void OnDestroy();

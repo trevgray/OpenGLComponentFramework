@@ -78,7 +78,6 @@
 			<Mesh name = "PlaneMesh"/>
 			<Material name = "CheckerBoardTexture"/>
 		</Actor>
-		
 	</Scene4>
 	
 </Root>

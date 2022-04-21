@@ -68,10 +68,10 @@ void AssetManager::BuildSceneAssets(std::string XMLFile_, std::string SceneName_
 		std::string actorCheck = currentElement->Name();
 		if (actorCheck == "Actor") { //check if the element is a actor
 			AddComponent<Actor>(currentElement->Attribute("name"), nullptr); //make the actor
-			currentComponent = currentElement->FirstChildElement("Mesh"); //get the FirstChildElement component in currentElement - name currentComponent
+			currentComponent = currentElement->FirstChildElement("Mesh"); //get the FirstChildElement component in currentElement
 			GetComponent<Actor>(currentElement->Attribute("name"))->AddComponent<MeshComponent>(GetComponent<MeshComponent>(currentComponent->Attribute("name"))); //set the mesh to a component made in the first loop
 			currentComponent = currentElement->FirstChildElement("Material");
-			GetComponent<Actor>(currentElement->Attribute("name"))->AddComponent<MaterialComponent>(GetComponent<MaterialComponent>(currentElement->FirstChildElement("Material")->Attribute("name"))); //set the material to a component made in the first loop
+			GetComponent<Actor>(currentElement->Attribute("name"))->AddComponent<MaterialComponent>(GetComponent<MaterialComponent>(currentComponent->Attribute("name"))); //set the material to a component made in the first loop
 			if (currentElement == sceneRoot->LastChildElement("Actor")) { //exit when component is = to the LastChildElement in currentComponent
 				actorLoop = false;
 			}

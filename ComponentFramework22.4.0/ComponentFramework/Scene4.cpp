@@ -140,7 +140,7 @@ void Scene4::Render() const {
 	glBindBuffer(GL_UNIFORM_BUFFER, GetActor<LightActor>()->GetLightID());
 
 	glUseProgram(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetProgram());
-	//for (int x = 0; x <= GetComponentVectorSize() - 1; x++) { //for each could also work
+
 	for (auto actor : GetActorGraph()) {
 		glUniformMatrix4fv(assetManager->GetComponent<ShaderComponent>("TextureShader")->GetUniformID("modelMatrix"), 1, GL_FALSE, actor.second->GetModelMatrix());
 		if (actor.second->GetComponent<MaterialComponent>() != nullptr) { //everything is an actor, so i just check if it has a texture
