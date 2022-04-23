@@ -23,7 +23,7 @@ Scene3::~Scene3() {
 bool Scene3::OnCreate() {
 	Debug::Info("Loading assets Scene3: ", __FILE__, __LINE__);
 	//assetManager
-	assetManager = new AssetManager();
+	assetManager = std::make_shared<AssetManager>();
 	assetManager->BuildSceneAssets("OpenGLAssets.xml", "Scene3");
 	assetManager->OnCreate();
 	//camera
@@ -84,8 +84,6 @@ bool Scene3::OnCreate() {
 
 void Scene3::OnDestroy() {
 	Debug::Info("Deleting assets Scene3: ", __FILE__, __LINE__);
-	delete assetManager;
-	assetManager = nullptr;
 }
 
 void Scene3::HandleEvents(const SDL_Event &sdlEvent) {

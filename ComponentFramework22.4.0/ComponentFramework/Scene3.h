@@ -15,7 +15,7 @@ class Scene3 : public Scene {
 private:
 	int nextRow;
 	float RowX, RowY;
-	AssetManager* assetManager; // i feel like the assetManager should not be a raw pointer, but idk how to make smart pointers in the scope of the entire scene - maybe putting it in the sceneManager?
+	Ref<AssetManager> assetManager;
 	//maybe the assetManager should also be inherited for Scene.h - that would also fix the scope issue
 public:
 	explicit Scene3();

@@ -78,6 +78,10 @@
 			<Mesh name = "PlaneMesh"/>
 			<Material name = "CheckerBoardTexture"/>
 		</Actor>
+
+		<Camera name = "Camera">
+			
+		</Camera>
 	</Scene4>
 	
 </Root>
