@@ -4,6 +4,8 @@
 #include "MeshComponent.h"
 #include "ShaderComponent.h"
 #include "MaterialComponent.h"
+#include "CameraActor.h"
+#include "LightActor.h"
 #include "tinyxml2.h"
 
 AssetManager::AssetManager() {}
@@ -37,6 +39,34 @@ void AssetManager::BuildSceneAssets(std::string XMLFile_, std::string SceneName_
 	}
 	tinyxml2::XMLElement* sceneRoot = XMLFile.RootElement()->FirstChildElement(SceneName_.c_str()); //getting root of the scene
 	tinyxml2::XMLElement* currentElement;
+	//Camera Component
+	currentElement = sceneRoot->FirstChildElement("Camera"); //loading the camera
+	AddComponent<CameraActor>(currentElement->Attribute("name"), nullptr); //create the camera actor
+	tinyxml2::XMLElement* transformElement = currentElement->FirstChildElement("Transform"); //i did this for you to read, it is unnecessary
+	GetComponent<CameraActor>(currentElement->Attribute("name"))->AddComponent<TransformComponent>(nullptr, //make transform component
+	Vec3(transformElement->FloatAttribute("posx"), transformElement->FloatAttribute("posy"), transformElement->FloatAttribute("posz")), //position
+	Quaternion(transformElement->FloatAttribute("qw"), transformElement->FloatAttribute("qx"), transformElement->FloatAttribute("qy"), transformElement->FloatAttribute("qz"))); //quaternion
+	//Light Loop - in Scene Scope
+	currentElement = sceneRoot->FirstChildElement("Light"); //loading first component from Scene Scope
+	bool lightLoop = true;
+	while (lightLoop) {
+		std::string lightCheck = currentElement->Name();
+		if (lightCheck == "Light") { //check if the element is a component
+		//Light loop
+			tinyxml2::XMLElement* locationElement = currentElement->FirstChildElement("Location"); //i did this for you to read, these are unnecessary
+			tinyxml2::XMLElement* colourElement = currentElement->FirstChildElement("Colour"); //but imagine if I didn't do it
+			tinyxml2::XMLElement* falloutElement = currentElement->FirstChildElement("Falloff");
+			AddComponent<LightActor>(currentElement->Attribute("name"), nullptr, currentElement->FirstChildElement("LightStyle")->Attribute("style"),
+			Vec3(locationElement->FloatAttribute("x"), locationElement->FloatAttribute("y"), locationElement->FloatAttribute("z")), //location
+			Vec4(colourElement->FloatAttribute("r"), colourElement->FloatAttribute("g"), colourElement->FloatAttribute("b"), colourElement->FloatAttribute("a")), //colour
+			currentElement->FirstChildElement("Intensity")->FloatAttribute("Intensity"), //intensity
+			Vec3(falloutElement->FloatAttribute("x"), falloutElement->FloatAttribute("y"), falloutElement->FloatAttribute("z"))); //fallout
+			if (currentElement == sceneRoot->LastChildElement("Light")) { //stopping looping when the current element is the last element in Scene Scope - sceneRoot->LastChild() will also work, but stopping at the last component should be faster
+				lightLoop = false;
+			}
+		}
+		currentElement = currentElement->NextSiblingElement(); //loading the next component
+	}
 	//Component Loop - in Scene Scope
 	currentElement = sceneRoot->FirstChildElement("Component"); //loading first component from Scene Scope
 	bool componentLoop = true;
@@ -78,4 +108,6 @@ void AssetManager::BuildSceneAssets(std::string XMLFile_, std::string SceneName_
 		}
 		currentElement = currentElement->NextSiblingElement(); //load next actor
 	}
+	//set everything to null
+	sceneRoot = nullptr; sceneRoot = nullptr; currentElement = nullptr; transformElement = nullptr;
 }

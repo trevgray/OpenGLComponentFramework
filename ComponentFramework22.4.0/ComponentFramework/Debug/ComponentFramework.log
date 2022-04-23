@@ -1,14 +1,2 @@
-﻿  Scene3.cpp
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(44,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(44,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(49,98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(49,85): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(56,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(56,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(64,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(64,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(68,99): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(68,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(75,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\ComponentFramework\Scene3.cpp(75,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  AssetManager.cpp
   ComponentFramework.vcxproj -> D:\GitHub\OpenGLComponentFramework\ComponentFramework22.4.0\Debug\ComponentFramework.exe

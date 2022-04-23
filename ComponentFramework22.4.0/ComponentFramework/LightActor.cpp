@@ -6,6 +6,21 @@ LightActor::LightActor(Component* parent_, LightStyle lightStyle_, Vec3 location
 lightStyle(lightStyle_), pos(location_), intensity(intensity_), colour(colour_), uboLightDataID(NULL) {
 }
 
+LightActor::LightActor(Component* parent_, std::string lightStyle_, Vec3 location_, Vec4 colour_, float intensity_, Vec3 fallOff_) : Actor(parent_), pos(location_), intensity(intensity_), colour(colour_), uboLightDataID(NULL) {
+	if (lightStyle_ == "PointLight") {
+		lightStyle = LightStyle::PointLight;
+	}
+	else if (lightStyle_ == "SkyLight") {
+		lightStyle = LightStyle::SkyLight;
+	}
+	else if (lightStyle_ == "SpotLight") {
+		lightStyle = LightStyle::SpotLight;
+	}
+	else {
+		lightStyle = LightStyle::DirectionLight;
+	}
+}
+
 LightActor::LightActor(Component* parent_) : Actor(parent_) {
 	pos = Vec3(0.0f, 10.0f, 0.0f);
 	colour = Vec4(0.8f, 0.8f, 0.8f, 0.0f);

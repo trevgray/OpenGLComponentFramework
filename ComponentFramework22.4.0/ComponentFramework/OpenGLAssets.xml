@@ -79,9 +79,17 @@
 			<Material name = "CheckerBoardTexture"/>
 		</Actor>
 
-		<Camera name = "Camera">
-			
+		<Camera name = "camera">
+			<Transform posx="0.0" posy ="0.5" posz="-13.0" qw ="1.0" qx="0.0" qy="0.0" qz ="0.0" scalex ="0.0" scaley ="0.0" scalez="0.0"/>
 		</Camera>
+
+		<Light name = "light">
+			<LightStyle style ="DirectionLight"/>
+			<Location x="0.0" y ="-10.0" z="0.0"/>
+			<Colour r="0.8" g="0.8" b="0.8" a="0.0"/>
+			<Intensity intensity ="1.0"/>
+			<Falloff x="0.0" y="0.0" z="0.0"/>
+		</Light>
 	</Scene4>
 	
 </Root>

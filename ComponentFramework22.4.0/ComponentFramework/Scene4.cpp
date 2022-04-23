@@ -28,10 +28,11 @@ bool Scene4::OnCreate() {
 	assetManager->OnCreate();
 	//camera
 	AddActor<CameraActor>("camera", new CameraActor(nullptr));
-	GetActor<CameraActor>()->AddComponent<TransformComponent>(nullptr,Vec3(0.0f,0.5f,-13.0f), Quaternion());
+	GetActor<CameraActor>()->InheritActor(assetManager->GetComponent<Actor>("camera"));
 	GetActor<CameraActor>()->OnCreate();
 	//light
-	AddActor<LightActor>("light", new LightActor(nullptr, LightStyle::DirectionLight, Vec3(0.0f, 10.0f, 0.0f), Vec4(0.8f, 0.8f, 0.8f, 0.0f)));
+	AddActor<LightActor>("light", new LightActor(nullptr));
+	GetActor<LightActor>()->InheritActor(assetManager->GetComponent<Actor>("light"));
 	GetActor<LightActor>()->OnCreate();
 	//checkerboard
 	AddActor<Actor>("checkerBoard", new Actor(nullptr));
