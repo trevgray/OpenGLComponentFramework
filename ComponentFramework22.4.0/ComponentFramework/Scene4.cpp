@@ -37,7 +37,6 @@ bool Scene4::OnCreate() {
 	//checkerboard
 	AddActor<Actor>("checkerBoard", new Actor(nullptr));
 	GetActor<Actor>("checkerBoard")->InheritActor(assetManager->GetComponent<Actor>("CheckerBoardActor"));
-	GetActor<Actor>("checkerBoard")->AddComponent<TransformComponent>(nullptr, Vec3(0.0f, 0.0f, 0.0f), Quaternion(0.95f, -0.31f, 0.0f, 0.0f), Vec3(1.0f,1.0f,1.0f));
 	GetActor<Actor>("checkerBoard")->OnCreate(); //The checkerboard is the 3rd Actor in the Scene
 
 	//Red Checker creation loop
