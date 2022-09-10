@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "Actor.h"
+#include "LightActor.h"
 #include <unordered_map>
 
 union SDL_Event;
@@ -10,9 +11,16 @@ class Scene{
 private:
 	//std::vector<Ref<Component>> actors; //make an unordered map
 	std::unordered_map <std::string, Ref<Actor>> actorGraph;
+	std::vector<Actor*> emptyActors;
 	//AssetManager* assetManager;
-public:	
-	virtual ~Scene() = default;
+public:
+	//std::unordered_map <std::string, Ref<Actor>> actorGraph;
+	virtual ~Scene() {
+		for (Actor* actor : emptyActors) {
+			delete actor;
+		}
+		emptyActors.clear();
+	}
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime) = 0;
@@ -28,6 +36,13 @@ public:
 	template<typename ActorTemplate, typename ... Args> void AddActor(std::string name, Args&& ... args_) { //rename to AddActor - also use actortemplate
 		Ref<ActorTemplate> t = std::make_shared<ActorTemplate>(std::forward<Args>(args_)...);
 		actorGraph[name] = t;
+		RemovePointer(std::forward<Args>(args_)...);
+		//write a function that removes the pointer
+	}
+
+	void RemovePointer(Actor* removeActor) {
+		emptyActors.push_back(removeActor);
+		//std::cout << "  " << removeActor << std::endl;
 	}
 
 	template<typename ActorTemplate> Ref<ActorTemplate> GetActor() const { //for compatibility with older scenes

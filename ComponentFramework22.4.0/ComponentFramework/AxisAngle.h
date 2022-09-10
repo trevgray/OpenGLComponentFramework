@@ -4,6 +4,7 @@
 namespace MATH {
 	struct AxisAngle {
 		AxisAngle(float angle_, Vec3 rotAxis_): angle(angle_), axis(rotAxis_){}
+		~AxisAngle(){}
 		float angle;
 		Vec3 axis;
 

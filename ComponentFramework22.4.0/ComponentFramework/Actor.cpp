@@ -9,7 +9,7 @@ Actor::~Actor() {
 
 void Actor::OnDestroy() {
 	RemoveAllComponents();
-	Debug::Info("Deleting assets for Actor: ", __FILE__, __LINE__);
+	//Debug::Info("Deleting assets for Actor: ", __FILE__, __LINE__);
 	isCreated = false;
 }
 
@@ -49,7 +49,6 @@ void Actor::RemoveAllComponents() {
 	for (auto currentComponent : components) {
 		currentComponent->OnDestroy();
 		currentComponent.reset();
-		//delete currentComponent;
 	}
 	components.clear(); //clear the vector
 }

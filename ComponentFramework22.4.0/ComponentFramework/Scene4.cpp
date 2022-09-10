@@ -11,13 +11,20 @@
 #include "MaterialComponent.h"
 #include "QMath.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+
 Scene4::Scene4(): RowX(0), RowY(0), nextRow(0), assetManager(nullptr) {
 	Debug::Info("Created Scene4: ", __FILE__, __LINE__);
 }
 
 Scene4::~Scene4() {
 	Debug::Info("Deleted Scene4: ", __FILE__, __LINE__);
-	OnDestroy();
+	OnDestroy();  
 }
 
 bool Scene4::OnCreate() {
@@ -43,7 +50,7 @@ bool Scene4::OnCreate() {
 	RowX = RowY = nextRow = 0.0f;
 	std::string checkerName;
 	for (int x = 0; x <= 11; x++) {
-		checkerName = "Red Checker " + std::to_string(x);;
+		checkerName = "RedChecker" + std::to_string(x);;
 		AddActor<Actor>(checkerName, new Actor(GetActor<Actor>("checkerBoard").get()));
 		GetActor<Actor>(checkerName)->InheritActor(assetManager->GetComponent<Actor>("RedCheckerActor"));
 		GetActor<Actor>(checkerName)->AddComponent<TransformComponent>(nullptr, Vec3(-4.5 + RowX, -4.3 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
@@ -61,8 +68,8 @@ bool Scene4::OnCreate() {
 	//Black Checker creation loop
 	RowX = RowY = nextRow = 0.0f;
 	for (int x = 0; x <= 11; x++) {
-		checkerName = "Black Checker " + std::to_string(x);
-		AddActor<Actor>(checkerName, new Actor(GetActor<Actor>("checkerBoard").get()));
+		checkerName = "BlackChecker" + std::to_string(x);
+		AddActor<Actor>(checkerName, new Actor (GetActor<Actor>("checkerBoard").get()));
 		GetActor<Actor>(checkerName)->InheritActor(assetManager->GetComponent<Actor>("BlackCheckerActor"));
 		GetActor<Actor>(checkerName)->AddComponent<TransformComponent>(nullptr, Vec3(-3.225 + RowX, 4.4 + RowY, 0.0f), Quaternion(1.0f, 0.0f, 0.0f, 0.0f), Vec3(0.14f, 0.14f, 0.14f));
 		GetActor<Actor>(checkerName)->OnCreate();
@@ -81,7 +88,6 @@ bool Scene4::OnCreate() {
 
 void Scene4::OnDestroy() {
 	Debug::Info("Deleting assets Scene4: ", __FILE__, __LINE__);
-	
 }
 
 void Scene4::HandleEvents(const SDL_Event &sdlEvent) {
